@@ -78,8 +78,7 @@ $strpos = Route::currentRouteName();
             <ul class="menu-sub">
                 <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="Role"
                     link='role.index' />
-                <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission"
-                    link='permission.index' />
+                <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
 
             </ul>
         </li>
