@@ -8,7 +8,6 @@
 'name' => 'Create Role',
 'route' => route('role.create')
 ])
-{{-- <box-icon type='solid' name='message-alt-add'></box-icon> --}}
 @stop
 @section('content')
 
@@ -19,44 +18,46 @@
             @yield('table_header')
 
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center dataTable" id="reference_table">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Slug Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                <div class="table-responsive text-nowrap"">
+                    <table class=" table table-bordered text-center dataTable">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Slug Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            @forelse ($roles as $key=> $data)
-                            <tr>
-                                <td>{{ $key+1}}</td>
-                                <td>{{ $data->name}}</td>
-                                <td>{{ $data->slug}}</td>
-                                <td>
-                                    <form action="{{ route('role.destroy', $data->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                    <tbody>
+                        @forelse ($roles as $key=> $data)
+                        <tr>
+                            <td>{{ $key+1}}</td>
+                            <td>{{ $data->name}}</td>
+                            <td>{{ $data->slug}}</td>
+                            <td>
+                                <form action="{{ route('role.destroy', $data->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
-                                        <a href="{{ route('role.edit', $data->id) }}"
-                                            class="btn btn-sm btn-secondary float-right">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <button type="submit" class="btn btn-sm btn-danger float-right">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                </td>
-                            </tr>
-                            @empty
+                                    <a href="{{ route('role.edit', $data->id) }}"
+                                        class="btn btn-sm btn-secondary float-right">
+                                        <i class="bx bx-edit-alt me-1"></i>
+                                    </a>
+                                    <button type="submit" class="btn btn-sm btn-danger float-right">
+                                        {{-- <i class="fa fa-trash"></i> --}}
+                                        <i class="bx bx-trash-alt me-1"></i>
 
-                            @endforelse
+                                    </button>
+                                </form>
+                            </td>
+                            </td>
+                        </tr>
+                        @empty
 
-                        </tbody>
+                        @endforelse
+
+                    </tbody>
                     </table>
                 </div>
             </div>
