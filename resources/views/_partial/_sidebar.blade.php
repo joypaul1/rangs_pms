@@ -1,3 +1,6 @@
+@php
+$strpos = Route::currentRouteName();
+@endphp
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
@@ -65,21 +68,23 @@
         </li>
 
         <!-- Layouts -->
-        <li class="menu-item">
+
+        {{-- Role Permission Panel --}}
+        <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Role Permission </div>
             </a>
-
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{ route('role.index') }}" class="menu-link">
-                        <div data-i18n="Without menu">Role</div>
-                    </a>
-                </li>
+                <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="Role"
+                    link='role.index' />
+                <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission"
+                    link='permission.index' />
 
             </ul>
         </li>
+        {{-- End Role Permission Panel --}}
+
 
     </ul>
 </aside>

@@ -16,6 +16,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets') }}/img/favicon/favicon.ico" />
     @include('_partial.headerCss')
     @stack('css')
+    @livewireStyles()
 
 </head>
 
@@ -133,6 +134,7 @@
 
     <!-- Core JS -->
     @include('_partial.footerJs')
+    @livewireScripts()
 </body>
 
 </html>
