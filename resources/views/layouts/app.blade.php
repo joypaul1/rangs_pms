@@ -14,7 +14,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets') }}/img/favicon/favicon.ico" />
-    @include('_partial.headerCss')
+    @include('_partials.headerCss')
     @stack('css')
     @livewireStyles()
 
@@ -27,14 +27,14 @@
         <div class="layout-container">
             <!-- Menu -->
 
-            @include('_partial._sidebar')
+            @include('_partials._sidebar')
             <!-- / Menu -->
 
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
 
-                @include('_partial.topNab')
+                @include('_partials.topNab')
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
@@ -78,7 +78,7 @@
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-    @include('_partial.footerJs')
+    @include('_partials.footerJs')
     @livewireScripts()
 </body>
 
