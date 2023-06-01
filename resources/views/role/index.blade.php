@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@include('_partials.delete_alert')
 @section('page-header')
 <i class="menu-icon tf-icons bx bx-list-ul" style="margin:0;font-size:30px"></i> Role List
 @stop
@@ -44,7 +45,7 @@
                                         class="btn btn-sm btn-secondary float-right">
                                         <i class="bx bx-edit-alt me-1"></i>
                                     </a>
-                                    <button type="submit" class="btn btn-sm btn-danger float-right">
+                                    <button data-href="{{ route('role.destroy',$data) }}" type="button" class="btn btn-sm btn-danger float-right delete_check">
                                         {{-- <i class="fa fa-trash"></i> --}}
                                         <i class="bx bx-trash-alt me-1"></i>
 

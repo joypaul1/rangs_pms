@@ -16,7 +16,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets') }}/img/favicon/favicon.ico" />
     @include('_partials.headerCss')
     @stack('css')
-    @livewireStyles()
+    {{-- @livewireStyles() --}}
 
 </head>
 
@@ -79,7 +79,39 @@
 
     <!-- Core JS -->
     @include('_partials.footerJs')
-    @livewireScripts()
+    {{-- @livewireScripts() --}}
+
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script>
+    {{-- toast-sms --}}
+    @if (Session::get('success'))
+        <script>
+                let $message = "{{Session::get('success') }}";
+                let $context = 'success';
+                let $positionClass= 'toast-top-right';
+                toastr.remove();
+                toastr[$context]($message, '', {
+                    positionClass: $positionClass
+                });
+        </script>
+    @elseif(Session::get('error'))
+        <script>
+            let $message = "{{Session::get('error') }}";
+            let $context = 'error';
+            let $positionClass= 'toast-top-right';
+            toastr.remove();
+            toastr[$context]($message, '', {
+                positionClass: $positionClass
+            });
+        </script>
+    @endif
 </body>
 
 </html>

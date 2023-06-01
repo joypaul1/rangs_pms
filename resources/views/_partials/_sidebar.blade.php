@@ -1,5 +1,6 @@
 @php
 $strpos = Route::currentRouteName();
+// dd($strpos);
 @endphp
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
@@ -70,14 +71,15 @@ $strpos = Route::currentRouteName();
         <!-- Layouts -->
 
         {{-- Role Permission Panel --}}
-        <li class="menu-item active open">
+        <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
+         {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Role Permission </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="Role"
-                    link='role.index' />
+                <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="role" link='role.index' />
+                <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
                 <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
 
             </ul>

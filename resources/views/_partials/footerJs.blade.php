@@ -12,8 +12,12 @@
 
     <!-- Main JS -->
     <script src="{{ asset('assets') }}/js/main.js"></script>
+    {{-- toastr --}}
+    <script src="{{ asset('assets') }}/vendor/toastr/toastr.js"></script>
 
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    @stack('js')

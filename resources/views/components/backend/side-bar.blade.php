@@ -15,7 +15,7 @@
         data-i18n="Without menu"
         @endisset
 
-        >{{$name}}</div>
+        >{{ucwords($name)}}</div>
     </a>
 </li>
 {{-- <li class="menu-item active">

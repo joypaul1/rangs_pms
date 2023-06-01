@@ -13,7 +13,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id','desc')->paginate(10);
+        $roles = Role::orderBy('id', 'desc')->paginate(10);
         return view('role.index', compact('roles'));
     }
 
@@ -33,12 +33,16 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required|unique:roles,name',
         ]);
-        Role::create([
-            'name' => $request->name,
-           'slug' => Str::slug($request->name),
-        ]);
+        try {
+            Role::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ]);
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error',  $ex->getMessage());
+        }
 
-        return redirect()->route('role.index')->with('success','Role has been created successfully.');
+        return redirect()->route('role.index')->with('success', 'Role has been created successfully.');
     }
 
     /**
@@ -55,7 +59,6 @@ class RoleController extends Controller
     public function edit(string $id)
     {
         return view('role.edit');
-
     }
 
     /**
@@ -69,8 +72,13 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        try {
+            $role->delete();
+        } catch (\Exception $ex) {
+            return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+        }
+        return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);
     }
 }

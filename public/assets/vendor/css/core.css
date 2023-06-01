@@ -16642,3 +16642,15 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .border-top {
     border-top: 3px solid #2099ac !important;
 }
+.text-right
+{
+    text-align: right;
+}
+.text-center
+{
+    text-align: center;
+}
+.text-left
+{
+    text-align: left;
+}
