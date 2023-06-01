@@ -15,10 +15,10 @@ class RolePermissionConctroller extends Controller
      */
     public function index()
     {
-        // if (auth()->user()->can('role-permission-list')) {
+        if (auth()->user()->can('role-permission-list')) {
         $role_permissions = Role::with('permissions')->get();
         return view('role_permission.index', compact('role_permissions'));
-        // }
+        }
 
         abort(403, "You have no permission! 😒");
     }
@@ -28,11 +28,11 @@ class RolePermissionConctroller extends Controller
      */
     public function create()
     {
-        // if (auth()->user()->can('role-permission-create')) {
-        $roles = Role::select('id', 'name')->get();
-        $permissions = Permission::select('id', 'name')->get();
-        return view('role_permission.create', compact('roles', 'permissions'));
-        // }
+        if (auth()->user()->can('role-permission-create')) {
+            $roles = Role::select('id', 'name')->get();
+            $permissions = Permission::select('id', 'name')->get();
+            return view('role_permission.create', compact('roles', 'permissions'));
+        }
 
         abort(403, "You have no permission! 😒");
     }
@@ -42,29 +42,29 @@ class RolePermissionConctroller extends Controller
      */
     public function store(Request $request)
     {
-        // if (auth()->user()->can('role-permission-create')) {
+        if (auth()->user()->can('role-permission-create')) {
 
-        $request->validate([
-            'role_id' => 'required|exists:roles,id',
-        ]);
-        try {
-            DB::beginTransaction();
+            $request->validate([
+                'role_id' => 'required|exists:roles,id',
+            ]);
+            try {
+                DB::beginTransaction();
 
-            for ($i = 0; $i < count($request->permission_id); $i++) {
+                for ($i = 0; $i < count($request->permission_id); $i++) {
 
-                RolePermission::insert([
-                    'role_id' =>  $request->role_id,
-                    'permission_id' => $request->permission_id[$i],
-                ]);
+                    RolePermission::insert([
+                        'role_id' =>  $request->role_id,
+                        'permission_id' => $request->permission_id[$i],
+                    ]);
+                }
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                return back()->with('error', $ex->getMessage());
             }
-            DB::commit();
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            return back()->with('error', $ex->getMessage());
-        }
 
-        return redirect()->route('role-permission.index')->with('success', 'RolePermission has been created successfully.');
-        // }
+            return redirect()->route('role-permission.index')->with('success', 'RolePermission has been created successfully.');
+        }
 
         abort(403, "You have no permission! 😒");
     }
@@ -81,15 +81,14 @@ class RolePermissionConctroller extends Controller
      */
     public function edit($id)
     {
-        // if (auth()->user()->can('role-permission-edit')) {
-        $role = Role::whereId($id)->select('id', 'name')->first();
-        $permissions = Permission::select('id', 'name')->get();
-        $rolePermission = RolePermission::where('role_id', $id)->get();
-        return view('role_permission.edit', compact('role', 'permissions', 'rolePermission'));
+        if (auth()->user()->can('role-permission-edit')) {
+            $role = Role::whereId($id)->select('id', 'name')->first();
+            $permissions = Permission::select('id', 'name')->get();
+            $rolePermission = RolePermission::where('role_id', $id)->get();
+            return view('role_permission.edit', compact('role', 'permissions', 'rolePermission'));
+        }
 
-        // }
-
-        // abort(403, "You have no permission! 😒");
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -97,50 +96,47 @@ class RolePermissionConctroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
-        $deletedID = [];
-        $insertID = [];
-        $getallPermission = RolePermission::where('role_id', $request->role_id)->get();
 
-        try {
-            DB::beginTransaction();
-            if (count($getallPermission) > 0) {
-                //update role permission
-                $deletedIds = array_diff($getallPermission->pluck('permission_id')->toArray(), $request->permission_id);
-                $insertIds  = array_diff($request->permission_id, $getallPermission->pluck('permission_id')->toArray());
+        if (auth()->user()->can('role-permission-edit')) {
+            $deletedID = [];
+            $insertID = [];
+            $getallPermission = RolePermission::where('role_id', $request->role_id)->get();
 
-                if (count($deletedIds) > 0) {
-                    RolePermission::whereIn('permission_id', $deletedIds)->delete();
-                }
+            try {
+                DB::beginTransaction();
+                if (count($getallPermission) > 0) {
+                    //update role permission
+                    $deletedIds = array_diff($getallPermission->pluck('permission_id')->toArray(), $request->permission_id);
+                    $insertIds  = array_diff($request->permission_id, $getallPermission->pluck('permission_id')->toArray());
 
-                if (count($insertIds) > 0) {
-                    foreach ($insertIds as $key => $insertId) {
+                    if (count($deletedIds) > 0) {
+                        RolePermission::whereIn('permission_id', $deletedIds)->delete();
+                    }
+
+                    if (count($insertIds) > 0) {
+                        foreach ($insertIds as $key => $insertId) {
+                            RolePermission::insert([
+                                'role_id' =>  $request->role_id,
+                                'permission_id' => $insertId,
+                            ]);
+                        }
+                    }
+                } else {
+
+                    //create role permission
+                    for ($i = 0; $i < count($request->permission_id); $i++) {
                         RolePermission::insert([
                             'role_id' =>  $request->role_id,
-                            'permission_id' => $insertId,
+                            'permission_id' => $request->permission_id[$i],
                         ]);
                     }
                 }
-
-            } else {
-
-                //create role permission
-                for ($i = 0; $i < count($request->permission_id); $i++) {
-                    RolePermission::insert([
-                        'role_id' =>  $request->role_id,
-                        'permission_id' => $request->permission_id[$i],
-                    ]);
-                }
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                return back()->with('error', $ex->getMessage());
             }
-            DB::commit();
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            return back()->with('error', $ex->getMessage());
-        }
-        return redirect()->route('role-permission.index')->with('success', 'RolePermission has been created successfully.');
-
-
-        if (auth()->user()->can('role-permission-edit')) {
+            return redirect()->route('role-permission.index')->with('success', 'RolePermission has been created successfully.');
         }
 
         abort(403, "You have no permission! 😒");

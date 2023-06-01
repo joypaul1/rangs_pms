@@ -15,8 +15,11 @@ class UserRoleConctroller extends Controller
      */
     public function index()
     {
-        $user_roles = User::with('roles')->get();
-        return view('user_role.index', compact('user_roles'));
+        // if (auth()->user()->can('role-permission-list')) {
+            $user_roles = User::with('roles')->get();
+            return view('user_role.index', compact('user_roles'));
+        // }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -43,7 +46,6 @@ class UserRoleConctroller extends Controller
                     $user_permissions =  $user_role->permissions;
                     $user->roles()->attach($user_role);
                     foreach ($user_permissions as $key => $user_perm) {
-                        // dd($user_role, $user_perm);
                         $user->permissions()->attach($user_perm);
                     }
                 }
@@ -72,7 +74,9 @@ class UserRoleConctroller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $roles = Role::select('id', 'name')->get();
+        $user = User::whereId($id)->select('id', 'name')->get();
+        return view('user_role.edit', compact('roles', 'user'));
     }
 
     /**
