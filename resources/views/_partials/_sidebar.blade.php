@@ -61,7 +61,7 @@ $strpos = Route::currentRouteName();
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item {{ request()->is('home') ? 'active' : ' ' }}">
             <a href="/home" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -80,7 +80,8 @@ $strpos = Route::currentRouteName();
             <ul class="menu-sub">
                 <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="role" link='role.index' />
                 <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
-                <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
+                <x-backend.side-bar class="{{ request()->is('role-permission') ? 'active' : ' ' }}" name="role-Permission" link='role-permission.index' />
+                <x-backend.side-bar class="{{ request()->is('user-role') ? 'active' : ' ' }}" name="user-Role" link='user-role.index' />
 
             </ul>
         </li>

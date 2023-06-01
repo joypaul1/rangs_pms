@@ -25,7 +25,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Slug Name</th>
+                            <th>Slug</th>
                             <th>Action</th>
                         </tr>
                     </thead>
