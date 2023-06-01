@@ -13,8 +13,11 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::orderBy('id','desc')->paginate(10);
-        return view('permission.index', compact('permissions'));
+        if (auth()->user()->can('permission-list')) {
+            $permissions = Permission::orderBy('id', 'desc')->paginate(10);
+            return view('permission.index', compact('permissions'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -22,7 +25,10 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permission.create');
+        if (auth()->user()->can('permission-create')) {
+            return view('permission.create');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -30,15 +36,18 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:permissions,name',
-        ]);
-        Permission::create([
-            'name' => $request->name,
-           'slug' => Str::slug($request->name),
-        ]);
+        if (auth()->user()->can('permission-create')) {
+            $request->validate([
+                'name' => 'required|unique:permissions,name',
+            ]);
+            Permission::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ]);
 
-        return redirect()->route('permission.index')->with('success','permission has been created successfully.');
+            return redirect()->route('permission.index')->with('success', 'permission has been created successfully.');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -54,8 +63,10 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        return view('permission.edit');
-
+        if (auth()->user()->can('permission-edit')) {
+            return view('permission.edit');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -63,7 +74,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (auth()->user()->can('permission-edit')) {
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -71,11 +84,14 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        try {
-            $permission->delete();
-        } catch (\Exception $ex) {
-            return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+        if (auth()->user()->can('permission-delete')) {
+            try {
+                $permission->delete();
+            } catch (\Exception $ex) {
+                return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+            }
+            return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);
         }
-        return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);
+        abort(403, "You have no permission! 😒");
     }
 }

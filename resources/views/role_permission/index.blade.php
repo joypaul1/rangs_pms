@@ -5,9 +5,9 @@
 @stop
 @section('table_header')
 @include('_partials.page_header', [
-'fa' => 'message-alt-add',
-'name' => 'Create Role-Permission',
-'route' => route('role-permission.create')
+// 'fa' => 'message-alt-add',
+// 'name' => 'Create Role-Permission',
+// 'route' => route('role-permission.create')
 ])
 @stop
 @section('content')
@@ -37,7 +37,7 @@
                             <td>{{ $data->name}}</td>
                             <td>{{ implode(' , ', $data->permissions->pluck('name')->toArray()) }}</td>
                             <td>
-                                <a href="{{ route('role-permission.edit', $data->id) }}"
+                                <a href="{{ route('role-permission.edit', $data) }}"
                                     class="btn btn-sm btn-secondary float-right">
                                     <i class="bx bx-edit-alt me-1"></i>
                                 </a>

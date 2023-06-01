@@ -4,6 +4,7 @@
         <div href="#" style="font-size: 20px;font-weight:700">
             @yield('page-header')
         </div>
+        @isset($name)
         <div>
             <a href="@isset($route){{ $route }}@else # @endisset" @isset($target) target="_blank" @endisset
                 class="btn btn-info btn-md">
@@ -11,6 +12,8 @@
                 {{ $name }}
             </a>
         </div>
+        @endisset
+
 
     </div>
 </div>

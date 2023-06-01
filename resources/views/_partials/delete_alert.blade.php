@@ -49,6 +49,7 @@
                         toastr[$context]($message, '', {
                             positionClass: $positionClass
                         });
+                        location.reload(true);
                         // if (res.status) {
                         //     table_name.DataTable().ajax.reload();
                         // }
