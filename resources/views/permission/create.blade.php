@@ -15,12 +15,13 @@
                             <label for="name" class="col-md-1 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required  autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                                    name="name" value="{{ old('name') }}" required autofocus>
 
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -65,21 +66,20 @@
 
             <div class="card-body">
                 <div class="col-6">
-                    <div class=" mb-4">
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('permission.store') }}">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="form-label" for="name"> Name</label>
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Permission Name.." required>
-                                </div>
 
-                                <div class="b-block text-right">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
+                    <form method="POST" action="{{ route('permission.store') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label" for="name"> Name</label>
+                            <input type="text" name="name" class="form-control" id="name"
+                                placeholder="Permission Name.." required>
                         </div>
-                    </div>
+
+                        <div class="b-block text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>

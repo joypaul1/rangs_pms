@@ -92,25 +92,25 @@
     </script>
     {{-- toast-sms --}}
     @if (Session::get('success'))
-        <script>
-                let $message = "{{Session::get('success') }}";
+    <script>
+        let $message = "{{Session::get('success') }}";
                 let $context = 'success';
                 let $positionClass= 'toast-top-right';
                 toastr.remove();
                 toastr[$context]($message, '', {
                     positionClass: $positionClass
                 });
-        </script>
+    </script>
     @elseif(Session::get('error'))
-        <script>
-            let $message = "{{Session::get('error') }}";
+    <script>
+        let $message = "{{Session::get('error') }}";
             let $context = 'error';
             let $positionClass= 'toast-top-right';
             toastr.remove();
             toastr[$context]($message, '', {
                 positionClass: $positionClass
             });
-        </script>
+    </script>
     @endif
 </body>
 

@@ -65,9 +65,9 @@
                         </a>
                     </li> --}}
 
-                    <li>
+                    {{-- <li>
                         <div class="dropdown-divider"></div>
-                    </li>
+                    </li> --}}
                     <li>
                         <a class="dropdown-item" href="{{ route('logout')}}"
                             onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">

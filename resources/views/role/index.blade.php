@@ -37,22 +37,21 @@
                             <td>{{ $data->name}}</td>
                             <td>{{ $data->slug}}</td>
                             <td>
-                                <form action="{{ route('role.destroy', $data->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <a href="{{ route('role.edit', $data->id) }}"
-                                        class="btn btn-sm btn-secondary float-right">
-                                        <i class="bx bx-edit-alt me-1"></i>
-                                    </a>
-                                    <button data-href="{{ route('role.destroy',$data) }}" type="button" class="btn btn-sm btn-danger float-right delete_check">
-                                        {{-- <i class="fa fa-trash"></i> --}}
-                                        <i class="bx bx-trash-alt me-1"></i>
 
-                                    </button>
-                                </form>
+                                <a href="{{ route('role.edit', $data->id) }}"
+                                    class="btn btn-sm btn-secondary float-right">
+                                    <i class="bx bx-edit-alt me-1"></i>
+                                </a>
+                                <button data-href="{{ route('role.destroy',$data) }}" type="button"
+                                    class="btn btn-sm btn-danger float-right delete_check">
+                                    {{-- <i class="fa fa-trash"></i> --}}
+                                    <i class="bx bx-trash-alt me-1"></i>
+
+
+                                    </form>
                             </td>
-                            </td>
+
                         </tr>
                         @empty
 
