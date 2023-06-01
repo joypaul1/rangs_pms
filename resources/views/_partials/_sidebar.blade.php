@@ -72,7 +72,11 @@ $strpos = Route::currentRouteName();
 
         {{-- Role Permission Panel --}}
         <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
-         {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}">
+         {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}
+         {{ strpos($strpos, 'role-permission') === 0 ? 'active open' : ' ' }}
+         {{ strpos($strpos, 'user-role') === 0 ? 'active open' : ' ' }}
+
+         ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Role Permission </div>

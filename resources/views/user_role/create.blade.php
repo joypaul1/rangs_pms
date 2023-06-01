@@ -1,31 +1,31 @@
+
 @extends('layouts.app')
-
+@section('page-header')
+<i class="menu-icon tf-icons bx bx-message-alt-add" style="margin:0;font-size:30px"></i> User-Role Create
+@stop
+@section('table_header')
+@include('_partials.page_header', [
+'fa' => 'list-ul',
+'name' => 'User-Role List',
+'route' => route('user-role.index')
+])
+@stop
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">{{ __('Create User-Role') }}</div>
 
-                <div class="card-body">
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border-top">
+            @yield('table_header')
+            <div class="card-body">
+                <div class="col-12">
                     <form method="POST" action="{{ route('user-role.store') }}">
                         @csrf
-
                         <div class="row mb-3">
-
                             <div class="col-md-3">
-                                <label for="name" class="col-12 col-form-label text-md-center">{{ __('Role') }}</label>
+                                <label for="name" class="col-12 col-form-label text-md-center">{{ __('User') }}</label>
                                 <hr>
 
-                                {{-- <input id="name" type="text"
-                                    class="form-control @error('name') is-invalid @enderror" name="name"
-                                    value="{{ old('name') }}" required autofocus>
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror --}}
                                 <select name="user_id" id="" class="form-control @error('user_id') is-invalid @enderror"
                                     required>
                                     <option value="{{null}}" hidden>
@@ -85,4 +85,6 @@
         </div>
     </div>
 </div>
+
 @endsection
+
