@@ -33,16 +33,18 @@ class PMSYearController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:p_m_s_years,name',
+            'status' => 'required',
         ]);
         try {
             PMSYear::create([
-                'name' => $request->name
+                'name' => $request->name,
+                'status' => $request->status
             ]);
         } catch (\Exception $ex) {
             return redirect()->back()->with('error',  $ex->getMessage());
         }
 
-        return redirect()->route('pms-year.index')->with('success', 'PMS Year has been created successfully.');
+        return redirect()->route('pms.year.index')->with('success', 'PMS Year has been created successfully.');
     }
 
     /**
@@ -58,7 +60,8 @@ class PMSYearController extends Controller
      */
     public function edit(string $id)
     {
-        return view('pms.year.edit');
+        $year = PMSYear::whereId($id)->first();
+        return view('pms.year.edit', compact('year'));
     }
 
     /**
@@ -66,17 +69,31 @@ class PMSYearController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all(), $id);
+        $request->validate([
+            'name' => 'required|unique:p_m_s_years,name,'.$id,
+            'status' => 'required',
+        ]);
+        try {
+            PMSYear::whereId($id)->update([
+                'name' => $request->name,
+                'status' => $request->status
+            ]);
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error',  $ex->getMessage());
+        }
+
+        return redirect()->route('pms.year.index')->with('success', 'PMS Year has been updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PMSYear $pmsyear)
+    public function destroy( $id)
     {
         try {
           DB::beginTransaction();
-            $pmsyear->delete();
+          PMSYear::whereId($id)->delete();
             DB::commit();
         } catch (\Exception $ex) {
             DB::rollback();

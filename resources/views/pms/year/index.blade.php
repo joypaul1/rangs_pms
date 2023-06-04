@@ -25,25 +25,37 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Slug</th>
+                            <th>Staus</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse ($roles as $key=> $data)
+                        @forelse ($years as $key=> $data)
                         <tr>
                             <td>{{ $key+1}}</td>
                             <td>{{ $data->name}}</td>
-                            <td>{{ $data->slug}}</td>
+                            <td class="text-center">
+                                @if ( $data->status)
+                                <button type="button" class="btn btn-icon btn-primary">
+                                    <span class="tf-icons bx-tada  bx bx-check-circle"></span>
+                                </button>
+                                @else
+                                <button type="button" class="btn btn-icon btn-danger">
+                                    <span class="tf-icons bx-tada bx bx-x-circle"></span>
+                                </button>
+                                @endif
+
+
+                            </td>
                             <td>
                                 <a href="{{ route('pms.year.edit', $data->id) }}"
                                     class="btn btn-sm btn-secondary float-right">
-                                    <i class="bx bx-edit-alt me-1"></i>
+                                    <i class="bx bx-fade-up-hover bx-edit-alt  me-1"></i>
                                 </a>
                                 <button data-href="{{ route('pms.year.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
-                                    <i class="bx bx-trash-alt me-1"></i>
+                                    <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i>
 
 
                                     </form>

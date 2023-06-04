@@ -114,7 +114,7 @@ $strpos = Route::currentRouteName();
         {{-- End tour Panel --}}
 
         {{-- pms Panel --}}
-        <li class="menu-item  {{ strpos($strpos, 'tour') === 0 ? 'active open' : ' ' }}
+        <li class="menu-item  {{ strpos($strpos, 'pms') === 0 ? 'active open' : ' ' }}
          ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-crown"></i>

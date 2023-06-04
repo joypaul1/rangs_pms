@@ -24,8 +24,22 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="name"> Name</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Role Name.."
+                            <input type="text" name="name" class="form-control" id="name" placeholder="2023 - 2024"
                                 required>
+                        </div>
+                        <div class="mb-3">
+                            {{-- <label class="form-label" for="name"> Name</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="2023 - 2024"
+                                required> --}}
+                                <div class="form-check mt-3">
+                                    <input name="status" class="form-check-input" type="radio" value="1" checked id="active">
+                                    <label class="form-check-label" for="active"> Active </label>
+
+                                  </div>
+                                <div class="form-check mt-3">
+                                    <input name="status" class="form-check-input" type="radio" value="0" id="Inactive">
+                                    <label class="form-check-label" for="Inactive"> Inactive </label>
+                                  </div>
                         </div>
 
                         <div class="b-block text-right">
