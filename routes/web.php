@@ -30,6 +30,7 @@ Route::get('/', function () {
 
 
 Auth::routes();
+Route::group(['middleware' => 'auth'],function(){
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('user-list', [App\Http\Controllers\HomeController::class, 'userList'])->name('user.list');
 Route::resource('user', UserController::class);
@@ -40,6 +41,8 @@ Route::resource('user-role', UserRoleConctroller::class);
 Route::resource('leave',LeaveController::class);
 Route::resource('tour',TourController::class);
 Route::resource('reeport',AttendanceController::class);
+});
+
 
 //pms
 Route::group(['middleware' => 'auth', 'prefix' => 'pms', 'as' => 'pmsConfig.'],function(){

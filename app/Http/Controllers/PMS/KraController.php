@@ -28,7 +28,7 @@ class KraController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->can('pms-kri-list')) {
+        if (auth()->user()->can('pms-kri-create')) {
             $year = PMSYear::whereStatus(1)->first();
             return view('pmsConfig.kra.create', compact('year'));
         }
@@ -40,7 +40,7 @@ class KraController extends Controller
      */
     public function store(Request $request)
     {
-        if (auth()->user()->can('pms-kri-list')) {
+        if (auth()->user()->can('pms-kri-create')) {
             $request->validate([
                 'name' => 'required|string|unique:k_r_a_s,name',
                 'note' => 'nullable|string',
@@ -74,7 +74,7 @@ class KraController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->can('pms-kri-list')) {
+        if (auth()->user()->can('pms-kri-edit')) {
             $kra = KRA::whereId($id)->with('year')->first();
             return view('pmsConfig.kra.edit', compact('kra'));
         }
@@ -86,7 +86,7 @@ class KraController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (auth()->user()->can('pms-kri-list')) {
+        if (auth()->user()->can('pms-kri-edit')) {
             $request->validate([
                 'name' => 'required|string',
                 'note' => 'nullable|string',
@@ -110,7 +110,7 @@ class KraController extends Controller
      */
     public function destroy($id)
     {
-        if (auth()->user()->can('pms-kri-list')) {
+        if (auth()->user()->can('pms-kri-delete')) {
             try {
                 DB::beginTransaction();
                 PMSYear::whereId($id)->delete();

@@ -14,8 +14,11 @@ class PMSYearController extends Controller
      */
     public function index()
     {
-        $years = PMSYear::orderBy('id', 'desc')->paginate(10);
-        return view('pmsConfig.year.index', compact('years'));
+        if (auth()->user()->can('pms-year-list')) {
+            $years = PMSYear::orderBy('id', 'desc')->paginate(10);
+            return view('pmsConfig.year.index', compact('years'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -23,7 +26,10 @@ class PMSYearController extends Controller
      */
     public function create()
     {
-        return view('pmsConfig.year.create');
+        if (auth()->user()->can('pms-year-create')) {
+            return view('pmsConfig.year.create');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -31,20 +37,23 @@ class PMSYearController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:p_m_s_years,name',
-            'status' => 'required',
-        ]);
-        try {
-            PMSYear::create([
-                'name' => $request->name,
-                'status' => $request->status
+        if (auth()->user()->can('pms-year-create')) {
+            $request->validate([
+                'name' => 'required|unique:p_m_s_years,name',
+                'status' => 'required',
             ]);
-        } catch (\Exception $ex) {
-            return redirect()->back()->with('error',  $ex->getMessage());
-        }
+            try {
+                PMSYear::create([
+                    'name' => $request->name,
+                    'status' => $request->status
+                ]);
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
 
-        return redirect()->route('pmsConfig.year.index')->with('success', 'PMS Year has been created successfully.');
+            return redirect()->route('pmsConfig.year.index')->with('success', 'PMS Year has been created successfully.');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -60,8 +69,11 @@ class PMSYearController extends Controller
      */
     public function edit(string $id)
     {
-        $year = PMSYear::whereId($id)->first();
-        return view('pmsConfig.year.edit', compact('year'));
+        if (auth()->user()->can('pms-year-edit')) {
+            $year = PMSYear::whereId($id)->first();
+            return view('pmsConfig.year.edit', compact('year'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -69,36 +81,41 @@ class PMSYearController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all(), $id);
-        $request->validate([
-            'name' => 'required|unique:p_m_s_years,name,'.$id,
-            'status' => 'required',
-        ]);
-        try {
-            PMSYear::whereId($id)->update([
-                'name' => $request->name,
-                'status' => $request->status
+        if (auth()->user()->can('pms-year-edit')) {
+            $request->validate([
+                'name' => 'required|unique:p_m_s_years,name,' . $id,
+                'status' => 'required',
             ]);
-        } catch (\Exception $ex) {
-            return redirect()->back()->with('error',  $ex->getMessage());
-        }
+            try {
+                PMSYear::whereId($id)->update([
+                    'name' => $request->name,
+                    'status' => $request->status
+                ]);
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
 
-        return redirect()->route('pmsConfig.year.index')->with('success', 'PMS Year has been updated successfully.');
+            return redirect()->route('pmsConfig.year.index')->with('success', 'PMS Year has been updated successfully.');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
-        try {
-          DB::beginTransaction();
-          PMSYear::whereId($id)->delete();
-            DB::commit();
-        } catch (\Exception $ex) {
-            DB::rollback();
-            return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+        if (auth()->user()->can('pms-year-delete')) {
+            try {
+                DB::beginTransaction();
+                PMSYear::whereId($id)->delete();
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollback();
+                return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+            }
+            return  response()->json(['status' => true, 'mes' => 'PMS Year Data Deleted Successfully']);
         }
-        return  response()->json(['status' => true, 'mes' => 'PMS Year Data Deleted Successfully']);
+        abort(403, "You have no permission! 😒");
     }
 }
