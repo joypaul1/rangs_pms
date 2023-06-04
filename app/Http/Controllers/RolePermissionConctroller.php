@@ -15,10 +15,10 @@ class RolePermissionConctroller extends Controller
      */
     public function index()
     {
-        // if (auth()->user()->can('role-permission-list')) {
+        if (auth()->user()->can('role-permission-list')) {
         $role_permissions = Role::with('permissions')->get();
         return view('role_permission.index', compact('role_permissions'));
-        // }
+        }
 
         abort(403, "You have no permission! 😒");
     }

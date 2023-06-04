@@ -71,6 +71,22 @@ $strpos = Route::currentRouteName();
         <!-- Layouts -->
 
         {{-- Role Permission Panel --}}
+        <li class="menu-item  {{ strpos($strpos, 'leave') === 0 ? 'active open' : ' ' }}
+         {{-- {{ strpos($strpos, 'tour') === 0 ? 'active open' : ' ' }} --}}
+
+         ">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Leave Module </div>
+            </a>
+            <ul class="menu-sub">
+                <x-backend.side-bar class="{{ request()->is('leave/create') ? 'active' : ' ' }}" name="Leave Create" link='leave.create' />
+                <x-backend.side-bar class="{{ request()->is('leave') ? 'active' : ' ' }}" name="Leave Report" link='leave.index' />
+
+            </ul>
+        </li>
+        {{-- End Role Permission Panel --}}
+        {{-- Role Permission Panel --}}
         <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'role-permission') === 0 ? 'active open' : ' ' }}
@@ -84,7 +100,7 @@ $strpos = Route::currentRouteName();
             <ul class="menu-sub">
                 <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="role" link='role.index' />
                 <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
-                <x-backend.side-bar class="{{ request()->is('role-permission') ? 'active' : ' ' }}" name="role-Permission" link='role-permission.index' />
+                <x-backend.side-bar class="{{ request()->is('role-permission') ? 'active' : ' ' }}" name="role-Permission"link='role-permission.index' />
                 <x-backend.side-bar class="{{ request()->is('user-role') ? 'active' : ' ' }}" name="user-Role" link='user-role.index' />
 
             </ul>

@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Leave\LeaveController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Report\AttendanceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionConctroller;
+use App\Http\Controllers\Tour\TourController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleConctroller;
 use Illuminate\Support\Facades\Auth;
@@ -32,3 +35,6 @@ Route::resource('role', RoleController::class);
 Route::resource('permission', PermissionController::class);
 Route::resource('role-permission', RolePermissionConctroller::class);
 Route::resource('user-role', UserRoleConctroller::class);
+Route::resource('leave',LeaveController::class);
+Route::resource('tour',TourController::class);
+Route::resource('tour',AttendanceController::class);
