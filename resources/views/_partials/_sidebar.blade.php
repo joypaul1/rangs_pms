@@ -78,8 +78,10 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">Leave Module </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->is('leave/create') ? 'active' : ' ' }}" name="Leave Create" link='leave.create' />
-                <x-backend.side-bar class="{{ request()->is('leave') ? 'active' : ' ' }}" name="Leave Report" link='leave.index' />
+                <x-backend.side-bar class="{{ request()->is('leave/create') ? 'active' : ' ' }}" name="Leave Create"
+                    link='leave.create' />
+                <x-backend.side-bar class="{{ request()->is('leave') ? 'active' : ' ' }}" name="Leave Report"
+                    link='leave.index' />
 
             </ul>
         </li>
@@ -92,8 +94,10 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">Tour Module </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Tour Create" link='tour.create' />
-                <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Tour Report" link='tour.index' />
+                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Tour Create"
+                    link='tour.create' />
+                <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Tour Report"
+                    link='tour.index' />
 
             </ul>
         </li>
@@ -106,8 +110,10 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">Report Module </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Self Attendance" link='tour.create' />
-                <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Outdoor Attendance" link='tour.index' />
+                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Self Attendance"
+                    link='tour.create' />
+                <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Outdoor Attendance"
+                    link='tour.index' />
 
             </ul>
         </li>
@@ -121,9 +127,12 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">PMS Module </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->segment(2) == 'pms' ? 'active' : ' ' }}" name="PMS List" link='tour.create' />
-                <x-backend.side-bar class="{{ request()->segment(2) == 'year' ? 'active' : ' ' }}" name="PMS Year" link='pmsConfig.year.index' />
-                <x-backend.side-bar class="{{ request()->segment(2) == 'kra' ? 'active' : ' ' }}" name="KRA" link='pmsConfig.kra.index' />
+                <x-backend.side-bar class="{{ request()->segment(2) == 'pms' ? 'active' : ' ' }}" name="PMS List"
+                    link='tour.create' />
+                <x-backend.side-bar class="{{ request()->segment(2) == 'year' ? 'active' : ' ' }}" name="PMS Year"
+                    link='pmsConfig.year.index' />
+                <x-backend.side-bar class="{{ request()->segment(2) == 'kra' ? 'active' : ' ' }}" name="KRA"
+                    link='pmsConfig.kra.index' />
 
             </ul>
         </li>
@@ -140,16 +149,34 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">Role Permission </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->segment(1) =='role' ? 'active' : ' ' }}" name="role" link='role.index' />
-                <x-backend.side-bar class="{{ request()->segment(1) =='permission' ? 'active' : ' ' }}" name="permission" link='permission.index' />
-                <x-backend.side-bar class="{{ request()->segment(1) == 'role-permission' ? 'active' : ' ' }}" name="role-permission" link='role-permission.index' />
-                <x-backend.side-bar class="{{ request()->segment(1) == 'user-role' ? 'active' : ' ' }}" name="user-role" link='user-role.index' />
+                <x-backend.side-bar class="{{ request()->segment(1) =='role' ? 'active' : ' ' }}" name="role"
+                    link='role.index' />
+                <x-backend.side-bar class="{{ request()->segment(1) =='permission' ? 'active' : ' ' }}"
+                    name="permission" link='permission.index' />
+                <x-backend.side-bar class="{{ request()->segment(1) == 'role-permission' ? 'active' : ' ' }}"
+                    name="role-permission" link='role-permission.index' />
+                <x-backend.side-bar class="{{ request()->segment(1) == 'user-role' ? 'active' : ' ' }}" name="user-role"
+                    link='user-role.index' />
 
             </ul>
         </li>
         {{-- End Role Permission Panel --}}
 
+        {{-- tour Panel --}}
+        <li class="menu-item  {{ strpos($strpos, 'user') === 0 ? 'active open' : ' ' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">User Module </div>
+            </a>
+            <ul class="menu-sub">
+                <x-backend.side-bar class="{{ request()->is('user') ? 'active' : ' ' }}" name="List"
+                    link='user.index' />
+                <x-backend.side-bar class="{{ request()->is('user/create') ? 'active' : ' ' }}" name="Create"
+                    link='user.create' />
 
+            </ul>
+        </li>
+        {{-- End tour Panel --}}
 
 
     </ul>

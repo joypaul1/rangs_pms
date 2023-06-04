@@ -43,11 +43,7 @@
                                 </a>
                                 <button data-href="{{ route('role.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
-                                    {{-- <i class="fa fa-trash"></i> --}}
                                     <i class="bx bx-trash-alt me-1"></i>
-
-
-                                   
                             </td>
 
                         </tr>

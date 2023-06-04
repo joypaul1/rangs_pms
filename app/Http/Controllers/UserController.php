@@ -14,8 +14,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+        if (auth()->user()->can('user-list')) {
+            $users = User::all();
+            return view('user.index', compact('users'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -23,7 +26,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        if (auth()->user()->can('user-create')) {
+            return view('user.create');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     protected function validator(array $data)
@@ -42,15 +48,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validator($request->all());
-        $user = User::create([
-            'name' => $request['name'],
-            'mobile' => $request['mobile'],
-            'email' => $request['email'],
-            'user_id' => $request['user_id'],
-            'password' => Hash::make($request['password']),
-        ]);
-        return redirect()->route('user.index')->with('success', 'User has been created successfully');
+        if (auth()->user()->can('user-create')) {
+            $this->validator($request->all());
+            $user = User::create([
+                'name' => $request['name'],
+                'mobile' => $request['mobile'],
+                'email' => $request['email'],
+                'user_id' => $request['user_id'],
+                'password' => Hash::make($request['password']),
+            ]);
+            return redirect()->route('user.index')->with('success', 'User has been created successfully');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -66,7 +75,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if (auth()->user()->can('user-edit')) {
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -74,7 +85,9 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (auth()->user()->can('user-edit')) {
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -82,6 +95,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (auth()->user()->can('user-delete')) {
+        }
+        abort(403, "You have no permission! 😒");
     }
 }
