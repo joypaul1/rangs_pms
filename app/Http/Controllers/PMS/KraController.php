@@ -14,10 +14,13 @@ class KraController extends Controller
      */
     public function index()
     {
-         $years = KRA::orderBy('id', 'desc')
-        ->with('activeYear')
-        ->paginate(10);
-        return view('pmsConfig.kra.index', compact('years'));
+        if (auth()->user()->can('pms-kri-list')) {
+            $years = KRA::orderBy('id', 'desc')
+                ->with('activeYear')
+                ->paginate(10);
+            return view('pmsConfig.kra.index', compact('years'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -25,8 +28,11 @@ class KraController extends Controller
      */
     public function create()
     {
-         $year = PMSYear::whereStatus(1)->first();
-        return view('pmsConfig.kra.create', compact('year'));
+        if (auth()->user()->can('pms-kri-list')) {
+            $year = PMSYear::whereStatus(1)->first();
+            return view('pmsConfig.kra.create', compact('year'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -34,22 +40,25 @@ class KraController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|unique:k_r_a_s,name',
-            'note' => 'nullable|string',
-        ]);
-        try {
-            KRA::create([
-                'name' => $request->name,
-                'user_id' => auth()->user()->id,
-                'pms_year_id' =>  $request->pms_year_id,
-                'note' => $request->note
+        if (auth()->user()->can('pms-kri-list')) {
+            $request->validate([
+                'name' => 'required|string|unique:k_r_a_s,name',
+                'note' => 'nullable|string',
             ]);
-        } catch (\Exception $ex) {
-            return redirect()->back()->with('error',  $ex->getMessage());
-        }
+            try {
+                KRA::create([
+                    'name' => $request->name,
+                    'user_id' => auth()->user()->id,
+                    'pms_year_id' =>  $request->pms_year_id,
+                    'note' => $request->note
+                ]);
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
 
-        return redirect()->route('pmsConfig.kra.index')->with('success', 'PMS Year has been created successfully.');
+            return redirect()->route('pmsConfig.kra.index')->with('success', 'PMS Year has been created successfully.');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -65,8 +74,11 @@ class KraController extends Controller
      */
     public function edit(string $id)
     {
-        $kra = KRA::whereId($id)->first();
-        return view('pmsConfig.kra.edit', compact('kra'));
+        if (auth()->user()->can('pms-kri-list')) {
+            $kra = KRA::whereId($id)->with('year')->first();
+            return view('pmsConfig.kra.edit', compact('kra'));
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
@@ -74,36 +86,41 @@ class KraController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all(), $id);
-        $request->validate([
-            'name' => 'required|string|unique:k_r_a_s,name,'.$id,
-            'note' => 'nullable|string',
-        ]);
-        try {
-            KRA::whereId($id)->update([
-                'name' => $request->name,
-                'note' => $request->note
+        if (auth()->user()->can('pms-kri-list')) {
+            $request->validate([
+                'name' => 'required|string',
+                'note' => 'nullable|string',
             ]);
-        } catch (\Exception $ex) {
-            return redirect()->back()->with('error',  $ex->getMessage());
-        }
+            try {
+                KRA::whereId($id)->update([
+                    'name' => $request->name,
+                    'note' => $request->note
+                ]);
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
 
-        return redirect()->route('pmsConfig.kra.index')->with('success', 'PMS Year has been updated successfully.');
+            return redirect()->route('pmsConfig.kra.index')->with('success', 'PMS Year has been updated successfully.');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
-        try {
-          DB::beginTransaction();
-          PMSYear::whereId($id)->delete();
-            DB::commit();
-        } catch (\Exception $ex) {
-            DB::rollback();
-            return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+        if (auth()->user()->can('pms-kri-list')) {
+            try {
+                DB::beginTransaction();
+                PMSYear::whereId($id)->delete();
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollback();
+                return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+            }
+            return  response()->json(['status' => true, 'mes' => 'PMS Year Data Deleted Successfully']);
         }
-        return  response()->json(['status' => true, 'mes' => 'PMS Year Data Deleted Successfully']);
+        abort(403, "You have no permission! 😒");
     }
 }

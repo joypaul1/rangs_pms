@@ -17,8 +17,8 @@
         <div class="card border-top">
             @yield('table_header')
 
-            <div class="card-body">
-                <div class="col-6">
+            <div class="card-body row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
                     <form method="post" action="{{ route('pmsConfig.kra.update',$kra->id) }}">
                         @csrf
                         @method("PUT")
@@ -42,8 +42,21 @@
                     </form>
 
                 </div>
-                <div class="col-6">
-                    <div class="align-baseline">year</div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="row col-12 align-items-center justify-content-center text-center "
+                        style="width:100%; height:100%">
+                        <strong class="border border-secondary  text-white" style="
+                            background: cadetblue;
+                            box-shadow: 1px 1px 3px 1px gray;
+                        "> Created PMS Year For
+                            <br>
+                            <span>
+                                {{$kra->year->name}}
+                            </span>
+
+                        </strong>
+
+                    </div>
                 </div>
             </div>
         </div>

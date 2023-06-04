@@ -64,7 +64,8 @@ class PermissionController extends Controller
     public function edit(string $id)
     {
         if (auth()->user()->can('permission-edit')) {
-            return view('permission.edit');
+            $permission = Permission::whereId($id)->first();
+            return view('permission.edit', compact('permission'));
         }
         abort(403, "You have no permission! 😒");
     }
@@ -75,6 +76,19 @@ class PermissionController extends Controller
     public function update(Request $request, string $id)
     {
         if (auth()->user()->can('permission-edit')) {
+
+            try {
+                $request->validate([
+                    'name' => 'required|unique:permissions,name,' . $id,
+                ]);
+                Permission::whereId($id)->update([
+                    'name' => $request->name,
+                    'slug' => Str::slug($request->name),
+                ]);
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('error', $ex->getMessage());
+            }
+            return redirect()->route('permission.index')->with('success', 'permission has been created successfully.');
         }
         abort(403, "You have no permission! 😒");
     }

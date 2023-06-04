@@ -142,8 +142,10 @@ $strpos = Route::currentRouteName();
             <ul class="menu-sub">
                 <x-backend.side-bar class="{{ request()->is('role') ? 'active' : ' ' }}" name="role" link='role.index' />
                 <x-backend.side-bar class="{{ request()->is('permission') ? 'active' : ' ' }}" name="permission" link='permission.index' />
-                <x-backend.side-bar class="{{ request()->is('role-permission') ? 'active' : ' ' }}" name="role-Permission"link='role-permission.index' />
-                <x-backend.side-bar class="{{ request()->is('user-role') ? 'active' : ' ' }}" name="user-Role" link='user-role.index' />
+                <x-backend.side-bar class="{{ request()->is('role-permission') ? 'active' : ' ' }}" name="role-permission" link='role-permission.index' />
+                {{-- <x-backend.side-bar class="{{ request()->is('role-permission') ? 'active' : ' ' }}" name="role-Permission"link='role-permission.index' /> --}}
+                {{-- <x-backend.side-bar class="{{ request()->is('user-role') ? 'active' : ' ' }}" name="user-Role"link='user-role.index' /> --}}
+            <x-backend.side-bar class="{{ request()->is('user-role') ? 'active' : ' ' }}" name="user-role" link='user-role.index' />
 
             </ul>
         </li>
