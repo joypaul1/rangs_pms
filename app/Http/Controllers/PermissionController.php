@@ -14,7 +14,7 @@ class PermissionController extends Controller
     public function index()
     {
         if (auth()->user()->can('permission-list')) {
-            $permissions = Permission::orderBy('id', 'desc')->paginate(10);
+            $permissions = Permission::orderBy('id', 'desc')->paginate(20);
             return view('permission.index', compact('permissions'));
         }
         abort(403, "You have no permission! 😒");

@@ -14,7 +14,7 @@ class RoleController extends Controller
     public function index()
     {
         if (auth()->user()->can('role-list')) {
-            $roles = Role::orderBy('id', 'desc')->paginate(10);
+            $roles = Role::orderBy('id', 'desc')->paginate(20);
             return view('role.index', compact('roles'));
         }
         abort(403, "You have no permission! 😒");
@@ -25,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->can('role-list')) {
+        if (auth()->user()->can('role-create')) {
             return view('role.create');
         }
         abort(403, "You have no permission! 😒");
@@ -102,7 +102,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        if (auth()->user()->can('role-list')) {
+        if (auth()->user()->can('role-delete')) {
             try {
                 $role->delete();
             } catch (\Exception $ex) {
