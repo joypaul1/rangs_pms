@@ -24,7 +24,6 @@ class UserController extends Controller
     public function create()
     {
         return view('user.create');
-
     }
 
     protected function validator(array $data)
@@ -44,7 +43,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validator($request->all());
-        $user= User::create([
+        $user = User::create([
             'name' => $request['name'],
             'mobile' => $request['mobile'],
             'email' => $request['email'],
