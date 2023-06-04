@@ -15,10 +15,10 @@ class RolePermissionConctroller extends Controller
      */
     public function index()
     {
-        if (auth()->user()->can('role-permission-list')) {
+        // if (auth()->user()->can('role-permission-list')) {
         $role_permissions = Role::with('permissions')->get();
         return view('role_permission.index', compact('role_permissions'));
-        }
+        // }
 
         abort(403, "You have no permission! 😒");
     }
@@ -51,7 +51,6 @@ class RolePermissionConctroller extends Controller
                 DB::beginTransaction();
 
                 for ($i = 0; $i < count($request->permission_id); $i++) {
-
                     RolePermission::insert([
                         'role_id' =>  $request->role_id,
                         'permission_id' => $request->permission_id[$i],
@@ -98,8 +97,8 @@ class RolePermissionConctroller extends Controller
     {
 
         if (auth()->user()->can('role-permission-edit')) {
-            $deletedID = [];
-            $insertID = [];
+            $deletedIds = [];
+            $insertIds = [];
             $getallPermission = RolePermission::where('role_id', $request->role_id)->get();
 
             try {
@@ -110,7 +109,9 @@ class RolePermissionConctroller extends Controller
                     $insertIds  = array_diff($request->permission_id, $getallPermission->pluck('permission_id')->toArray());
 
                     if (count($deletedIds) > 0) {
-                        RolePermission::whereIn('permission_id', $deletedIds)->delete();
+                        foreach ($deletedIds as $key => $deletedId) {
+                            RolePermission::where('role_id' ,$request->role_id)->where('permission_id', $deletedId)->delete();
+                        }
                     }
 
                     if (count($insertIds) > 0) {
