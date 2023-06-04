@@ -36,7 +36,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        if (auth()->user()->can('role-list')) {
+        if (auth()->user()->can('role-create')) {
             $request->validate([
                 'name' => 'required|unique:roles,name',
             ]);
@@ -67,8 +67,9 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->can('role-list')) {
-            return view('role.edit');
+        if (auth()->user()->can('role-edit')) {
+            $role = Role::whereId($id)->first();
+            return view('role.edit', compact('role'));
         }
         abort(403, "You have no permission! 😒");
     }
@@ -78,7 +79,22 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (auth()->user()->can('role-edit')) {
+            $request->validate([
+                'name' => 'required|unique:roles,name,' . $id,
+            ]);
+            try {
+                Role::whereId($id)->update([
+                    'name' => $request->name,
+                    'slug' => Str::slug($request->name),
+                ]);
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
+
+            return redirect()->route('role.index')->with('success', 'Role has been created successfully.');
+        }
+        abort(403, "You have no permission! 😒");
     }
 
     /**
