@@ -112,6 +112,21 @@ $strpos = Route::currentRouteName();
             </ul>
         </li>
         {{-- End tour Panel --}}
+
+        {{-- pms Panel --}}
+        <li class="menu-item  {{ strpos($strpos, 'tour') === 0 ? 'active open' : ' ' }}
+         ">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <div data-i18n="Layouts">PMS Module </div>
+            </a>
+            <ul class="menu-sub">
+                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="PMS List" link='tour.create' />
+                {{-- <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Outdoor Attendance" link='tour.index' /> --}}
+
+            </ul>
+        </li>
+        {{-- End pms Panel --}}
         {{-- Role Permission Panel --}}
         <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}
@@ -132,6 +147,8 @@ $strpos = Route::currentRouteName();
             </ul>
         </li>
         {{-- End Role Permission Panel --}}
+
+
 
 
     </ul>

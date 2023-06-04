@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_roles', function (Blueprint $table) {
+        Schema::create('p_m_s', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
-            //PRIMARY KEYS
-            // $table->primary(['user_id','role_id']);
+            $table->unsignedBigInteger('pms_year_id');
+            $table->foreign('pms_year_id')->references('id')->on('p_m_years');
+            $table->string('grade_name');
+            $table->timestamps();
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_roles');
+        Schema::dropIfExists('p_m_s');
     }
 };
