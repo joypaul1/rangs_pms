@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('pms_year_id');
-            $table->foreign('pms_year_id')->references('id')->on('p_m_years');
+            $table->foreign('pms_year_id')->references('id')->on('p_m_s_years');
             $table->boolean('approved')->default(0)->comment('approved == 1 either 0 == not approved');
             $table->string('track_status')->nullable();
             $table->timestamps();

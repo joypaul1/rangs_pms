@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('p_m_s_years', function (Blueprint $table) {
             $table->id();
             $table->string('year');
-            $table->boolean(0);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

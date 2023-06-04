@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('pms_year_id');
-            $table->foreign('pms_year_id')->references('id')->on('p_m_years');
+            $table->foreign('pms_year_id')->references('id')->on('p_m_s_years');
             $table->string('grade_name');
             $table->timestamps();
         });

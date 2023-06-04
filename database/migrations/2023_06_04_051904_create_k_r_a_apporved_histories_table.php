@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('kra_id');
             $table->foreign('kra_id')->references('id')->on('k_r_a_s')->cascadeOnDelete();
             $table->dateTime('date');
-            
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

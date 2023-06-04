@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Leave\LeaveController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PMS\PMSYearController;
 use App\Http\Controllers\Report\AttendanceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionConctroller;
@@ -37,4 +38,10 @@ Route::resource('role-permission', RolePermissionConctroller::class);
 Route::resource('user-role', UserRoleConctroller::class);
 Route::resource('leave',LeaveController::class);
 Route::resource('tour',TourController::class);
-Route::resource('tour',AttendanceController::class);
+Route::resource('reeport',AttendanceController::class);
+
+//pms
+Route::group(['middleware' => 'auth', 'prefix' => 'pms', 'as' => 'pms.'],function(){
+
+    Route::resource('year', PMSYearController::class);
+});

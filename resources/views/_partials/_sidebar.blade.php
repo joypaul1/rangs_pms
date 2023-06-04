@@ -121,7 +121,8 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">PMS Module </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="PMS List" link='tour.create' />
+                <x-backend.side-bar class="{{ request()->is('pms') ? 'active' : ' ' }}" name="PMS List" link='tour.create' />
+                <x-backend.side-bar class="{{ request()->is('pms/year') ? 'active' : ' ' }}" name="PMS Year" link='pms.year.index' />
                 {{-- <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Outdoor Attendance" link='tour.index' /> --}}
 
             </ul>
