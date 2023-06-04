@@ -133,6 +133,8 @@ $strpos = Route::currentRouteName();
                     link='pmsConfig.year.index' />
                 <x-backend.side-bar class="{{ request()->segment(2) == 'kra' ? 'active' : ' ' }}" name="KRA"
                     link='pmsConfig.kra.index' />
+                <x-backend.side-bar class="{{ request()->segment(2) == 'kpi' ? 'active' : ' ' }}" name="KPI"
+                    link='pmsConfig.kpi.index' />
 
             </ul>
         </li>

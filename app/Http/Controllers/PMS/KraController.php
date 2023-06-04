@@ -15,7 +15,7 @@ class KraController extends Controller
     public function index()
     {
         if (auth()->user()->can('pms-kri-list')) {
-            $years = KRA::orderBy('id', 'desc')
+            $years = KRA::where('user_id', auth()->user()->id)->orderBy('id', 'desc')
                 ->with('activeYear')
                 ->paginate(10);
             return view('pmsConfig.kra.index', compact('years'));
