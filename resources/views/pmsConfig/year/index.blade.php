@@ -7,7 +7,7 @@
 @include('_partials.page_header', [
 'fa' => 'message-alt-add',
 'name' => 'Create Pms-Year',
-'route' => route('pms.year.create')
+'route' => route('pmsConfig.year.create')
 ])
 @stop
 @section('content')
@@ -49,16 +49,14 @@
 
                             </td>
                             <td>
-                                <a href="{{ route('pms.year.edit', $data->id) }}"
+                                <a href="{{ route('pmsConfig.year.edit', $data->id) }}"
                                     class="btn btn-sm btn-secondary float-right">
                                     <i class="bx bx-fade-up-hover bx-edit-alt  me-1"></i>
                                 </a>
-                                <button data-href="{{ route('pms.year.destroy',$data) }}" type="button"
+                                <button data-href="{{ route('pmsConfig.year.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i>
 
-
-                                    </form>
                             </td>
 
                         </tr>

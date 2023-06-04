@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('page-header')
-<i class="menu-icon tf-icons bx bx-message-alt-add" style="margin:0;font-size:30px"></i>  Pms-Year Edit
+<i class="menu-icon tf-icons bx bx-message-alt-add" style="margin:0;font-size:30px"></i>  Pms-Year Create
 @stop
 @section('table_header')
 @include('_partials.page_header', [
 'fa' => 'list-ul',
 'name' => ' Pms-Year List',
-'route' => route('pms.year.index')
+'route' => route('pmsConfig.year.index')
 ])
 @stop
 @section('content')
@@ -20,31 +20,22 @@
             <div class="card-body">
                 <div class="col-6">
 
-                    <form method="post" action="{{ route('pms.year.update',$year->id) }}">
+                    <form method="POST" action="{{ route('pmsConfig.year.store') }}">
                         @csrf
-                        @method("PUT")
                         <div class="mb-3">
-                            <label class="form-label" for="name"> Name</label>
+                            <label class="form-label" for="name"> Name <strong class="text-danger">*</strong></label>
                             <input type="text" name="name" class="form-control" id="name" placeholder="2023 - 2024"
-                            value="{{ $year->name }}"
-                            required>
+                                required>
                         </div>
                         <div class="mb-3">
+
                                 <div class="form-check mt-3">
-                                    <input name="status" class="form-check-input" type="radio" value="1"
-                                        @if ($year->status)
-                                        checked
-                                        @endif
-                                     id="active">
+                                    <input name="status" class="form-check-input" type="radio" value="1" checked id="active">
                                     <label class="form-check-label" for="active"> Active </label>
 
                                   </div>
                                 <div class="form-check mt-3">
-                                    <input name="status" class="form-check-input" type="radio" value="0"
-                                    @if (!$year->status)
-                                    checked
-                                    @endif
-                                    id="Inactive">
+                                    <input name="status" class="form-check-input" type="radio" value="0" id="Inactive">
                                     <label class="form-check-label" for="Inactive"> Inactive </label>
                                   </div>
                         </div>

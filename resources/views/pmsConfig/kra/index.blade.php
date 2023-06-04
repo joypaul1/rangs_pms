@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @include('_partials.delete_alert')
 @section('page-header')
-<i class="menu-icon tf-icons bx bx-list-ul" style="margin:0;font-size:30px"></i> Role List
+<i class="menu-icon tf-icons bx bx-list-ul" style="margin:0;font-size:30px"></i> Pms-KRA List
 @stop
 @section('table_header')
 @include('_partials.page_header', [
 'fa' => 'message-alt-add',
-'name' => 'Create Role',
-'route' => route('role.create')
+'name' => 'Create Pms-KRA',
+'route' => route('pmsConfig.kra.create')
 ])
 @stop
 @section('content')
@@ -25,29 +25,28 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Slug</th>
+                            <th>Note</th>
+                            <th>PMS-Year</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse ($roles as $key=> $data)
+                        @forelse ($years as $key=> $data)
                         <tr>
                             <td>{{ $key+1}}</td>
                             <td>{{ $data->name}}</td>
-                            <td>{{ $data->slug}}</td>
+                            <td>{{ $data->note}}</td>
+                            <td>{{ $data->activeYear->name}}</td>
                             <td>
-                                <a href="{{ route('role.edit', $data->id) }}"
+                                <a href="{{ route('pmsConfig.kra.edit', $data->id) }}"
                                     class="btn btn-sm btn-secondary float-right">
-                                    <i class="bx bx-edit-alt me-1"></i>
+                                    <i class="bx bx-fade-up-hover bx-edit-alt  me-1"></i>
                                 </a>
-                                <button data-href="{{ route('role.destroy',$data) }}" type="button"
+                                <button data-href="{{ route('pmsConfig.kra.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
-                                    {{-- <i class="fa fa-trash"></i> --}}
-                                    <i class="bx bx-trash-alt me-1"></i>
+                                    <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i>
 
-
-                                   
                             </td>
 
                         </tr>

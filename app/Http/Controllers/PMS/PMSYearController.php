@@ -15,7 +15,7 @@ class PMSYearController extends Controller
     public function index()
     {
         $years = PMSYear::orderBy('id', 'desc')->paginate(10);
-        return view('pms.year.index', compact('years'));
+        return view('pmsConfig.year.index', compact('years'));
     }
 
     /**
@@ -23,7 +23,7 @@ class PMSYearController extends Controller
      */
     public function create()
     {
-        return view('pms.year.create');
+        return view('pmsConfig.year.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class PMSYearController extends Controller
             return redirect()->back()->with('error',  $ex->getMessage());
         }
 
-        return redirect()->route('pms.year.index')->with('success', 'PMS Year has been created successfully.');
+        return redirect()->route('pmsConfig.year.index')->with('success', 'PMS Year has been created successfully.');
     }
 
     /**
@@ -61,7 +61,7 @@ class PMSYearController extends Controller
     public function edit(string $id)
     {
         $year = PMSYear::whereId($id)->first();
-        return view('pms.year.edit', compact('year'));
+        return view('pmsConfig.year.edit', compact('year'));
     }
 
     /**
@@ -83,7 +83,7 @@ class PMSYearController extends Controller
             return redirect()->back()->with('error',  $ex->getMessage());
         }
 
-        return redirect()->route('pms.year.index')->with('success', 'PMS Year has been updated successfully.');
+        return redirect()->route('pmsConfig.year.index')->with('success', 'PMS Year has been updated successfully.');
     }
 
     /**

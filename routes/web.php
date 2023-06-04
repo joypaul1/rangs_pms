@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Leave\LeaveController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PMS\KraController;
 use App\Http\Controllers\PMS\PMSYearController;
 use App\Http\Controllers\Report\AttendanceController;
 use App\Http\Controllers\RoleController;
@@ -41,7 +42,7 @@ Route::resource('tour',TourController::class);
 Route::resource('reeport',AttendanceController::class);
 
 //pms
-Route::group(['middleware' => 'auth', 'prefix' => 'pms', 'as' => 'pms.'],function(){
-
+Route::group(['middleware' => 'auth', 'prefix' => 'pms', 'as' => 'pmsConfig.'],function(){
     Route::resource('year', PMSYearController::class);
+    Route::resource('kra', KraController::class);
 });
