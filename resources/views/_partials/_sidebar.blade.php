@@ -70,10 +70,8 @@ $strpos = Route::currentRouteName();
 
         <!-- Layouts -->
 
-        {{-- Role Permission Panel --}}
+        {{-- Leave Panel --}}
         <li class="menu-item  {{ strpos($strpos, 'leave') === 0 ? 'active open' : ' ' }}
-         {{-- {{ strpos($strpos, 'tour') === 0 ? 'active open' : ' ' }} --}}
-
          ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -85,7 +83,35 @@ $strpos = Route::currentRouteName();
 
             </ul>
         </li>
-        {{-- End Role Permission Panel --}}
+        {{-- End Leave Panel --}}
+        {{-- tour Panel --}}
+        <li class="menu-item  {{ strpos($strpos, 'tour') === 0 ? 'active open' : ' ' }}
+         ">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Tour Module </div>
+            </a>
+            <ul class="menu-sub">
+                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Tour Create" link='tour.create' />
+                <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Tour Report" link='tour.index' />
+
+            </ul>
+        </li>
+        {{-- End tour Panel --}}
+        {{-- report Panel --}}
+        <li class="menu-item  {{ strpos($strpos, 'tour') === 0 ? 'active open' : ' ' }}
+         ">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Report Module </div>
+            </a>
+            <ul class="menu-sub">
+                <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Self Attendance" link='tour.create' />
+                <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Outdoor Attendance" link='tour.index' />
+
+            </ul>
+        </li>
+        {{-- End tour Panel --}}
         {{-- Role Permission Panel --}}
         <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}

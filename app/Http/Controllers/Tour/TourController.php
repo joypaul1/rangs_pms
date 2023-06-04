@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Tour;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class TourController extends Controller
 {
     /**
@@ -12,7 +13,8 @@ class TourController extends Controller
      */
     public function index()
     {
-        //
+        // $roles = Role::orderBy('id', 'desc')->paginate(10);
+        return view('tour.index');
     }
 
     /**
@@ -20,7 +22,7 @@ class TourController extends Controller
      */
     public function create()
     {
-        //
+        return view('tour.create');
     }
 
     /**
@@ -28,7 +30,19 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name',
+        ]);
+        try {
+            Role::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ]);
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error',  $ex->getMessage());
+        }
+
+        return redirect()->route('role.index')->with('success', 'Role has been created successfully.');
     }
 
     /**
@@ -44,7 +58,7 @@ class TourController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('role.edit');
     }
 
     /**
@@ -58,8 +72,13 @@ class TourController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        try {
+            $role->delete();
+        } catch (\Exception $ex) {
+            return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+        }
+        return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);
     }
 }
