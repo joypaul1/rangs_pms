@@ -2,10 +2,11 @@
 
 namespace App\Models\PMS;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\AutoTimeStamp;
 use Illuminate\Database\Eloquent\Model;
 
 class PMSYear extends Model
 {
-    use HasFactory;
+    use AutoTimeStamp;
+    protected $guarded = ['id'];
 }
