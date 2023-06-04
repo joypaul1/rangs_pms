@@ -56,10 +56,12 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="d-flex justify-content-center mb-2">
-                            <img  class="" src="{{ asset('assets/rangs.png') }}" alt=""   style="box-shadow: 2px 2px 6px 1px indianred;"  >
+                            <img  class="" src="{{ asset('assets/rangs.png') }}" alt=""
+                            width="50%"
+                              style="box-shadow: 2px 2px 6px 1px #1f4698;"  >
 
                         </div>
-                        <div class="app-brand justify-content-center" style="margin:0%">
+                        <div class="app-brand justify-content-center border border-secondary" style="margin:0%">
 
                             <a href="#" class="app-brand-link gap-2">
 
@@ -111,16 +113,18 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bolder">PMS Login 👋</span>
+                                <span class="app-brand-text demo text-body fw-bolder">PMS Login </span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        {{-- <div class="d-flex justify-content-center">
-                            <img  class="" src="{{ asset('assets/rangs.png') }}" alt=""     >
+                        {{-- <div class="d-flex justify-content-center mt-2">
+                            <img  class="" src="{{ asset('assets/rangs.png') }}" alt=""
+                            style="box-shadow: 2px 2px 6px 1px #1f4698;"
+                            >
 
                         </div> --}}
-                        {{-- <h4 class="mb-2 text-center">Welcome to Rangs Group! 👋</h4> --}}
-                        {{-- <p class="mb-4">Please sign-in to your account and start the adventure</p> --}}
+                        <h4 class="mt-4 mb-2 text-center">Welcome to Rangs Group! 👋</h4>
+                        <p class="mb-4 text-center">Please sign-in to PMS Admin Panel.</p>
 
                         <form id="formAuthentication" class="mb-3 mt-3" action="{{ route('login')}}" method="POST">
                             @csrf
