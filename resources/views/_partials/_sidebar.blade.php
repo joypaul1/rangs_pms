@@ -78,10 +78,15 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">Leave Module </div>
             </a>
             <ul class="menu-sub">
+                @if(auth()->user()->can('leave-create'))
                 <x-backend.side-bar class="{{ request()->is('leave/create') ? 'active' : ' ' }}" name="Leave Create"
                     link='leave.create' />
+                @endif
+                @if(auth()->user()->can('leave-list'))
                 <x-backend.side-bar class="{{ request()->is('leave') ? 'active' : ' ' }}" name="Leave Report"
                     link='leave.index' />
+                @endif
+
 
             </ul>
         </li>
@@ -94,10 +99,17 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">Tour Module </div>
             </a>
             <ul class="menu-sub">
+                @if(auth()->user()->can('tour-create'))
                 <x-backend.side-bar class="{{ request()->is('tour/create') ? 'active' : ' ' }}" name="Tour Create"
                     link='tour.create' />
+                @endif
+
+                @if(auth()->user()->can('tour-index'))
+
                 <x-backend.side-bar class="{{ request()->is('tour') ? 'active' : ' ' }}" name="Tour Report"
                     link='tour.index' />
+                @endif
+
 
             </ul>
         </li>
@@ -127,14 +139,24 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">PMS Module </div>
             </a>
             <ul class="menu-sub">
+                @if(auth()->user()->can('pms-list'))
+
                 <x-backend.side-bar class="{{ request()->segment(2) == 'home' ? 'active' : ' ' }}" name="PMS List"
                     link='pmsConfig.home.index' />
+                @endif
+                @if(auth()->user()->can('pms-year-list'))
                 <x-backend.side-bar class="{{ request()->segment(2) == 'year' ? 'active' : ' ' }}" name="PMS Year"
                     link='pmsConfig.year.index' />
+                @endif
+                @if(auth()->user()->can('pms-kra-list'))
+
                 <x-backend.side-bar class="{{ request()->segment(2) == 'kra' ? 'active' : ' ' }}" name="KRA"
                     link='pmsConfig.kra.index' />
+                @endif
+                @if(auth()->user()->can('pms-kpi-list'))
                 <x-backend.side-bar class="{{ request()->segment(2) == 'kpi' ? 'active' : ' ' }}" name="KPI"
                     link='pmsConfig.kpi.index' />
+                @endif
 
             </ul>
         </li>

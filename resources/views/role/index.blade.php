@@ -37,13 +37,17 @@
                             <td>{{ $data->name}}</td>
                             <td>{{ $data->slug}}</td>
                             <td>
+                                @if (auth()->user()->can('role-edit'))
                                 <a href="{{ route('role.edit', $data->id) }}"
                                     class="btn btn-sm btn-secondary float-right">
                                     <i class="bx bx-edit-alt me-1"></i>
                                 </a>
+                                @endif
+                                @if (auth()->user()->can('role-delete'))
                                 <button data-href="{{ route('role.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-trash-alt me-1"></i>
+                                @endif
                             </td>
 
                         </tr>
@@ -53,6 +57,9 @@
 
                     </tbody>
                     </table>
+                </div>
+                <div class="d-flex">
+                    {!! $permissions->links() !!}
                 </div>
             </div>
         </div>

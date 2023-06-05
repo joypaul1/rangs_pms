@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @include('_partials.delete_alert')
 @section('page-header')
@@ -21,42 +20,43 @@
 
             <div class="card-body">
                 <div class="table-responsive text-nowrap"">
-                    <table class="table table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                    <table class=" table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Slug</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            @forelse ($permissions as $key=> $data)
-                            <tr>
-                                <td>{{ $key+1}}</td>
-                                <td>{{ $data->name}}</td>
-                                <td>{{ $data->slug}}</td>
-                                <td>
+                    <tbody>
+                        @forelse ($permissions as $key=> $data)
+                        <tr>
+                            <td>{{ $key+1}}</td>
+                            <td>{{ $data->name}}</td>
+                            <td>{{ $data->slug}}</td>
+                            <td>
+                                @if (auth()->user()->can('role-edit'))
+                                <a href="{{ route('permission.edit', $data->id) }}"
+                                    class="btn btn-sm btn-secondary float-right">
+                                    <i class="bx bx-edit-alt me-1"></i>
+                                </a>
+                                @endif
+                                @if (auth()->user()->can('role-edit'))
+                                <button data-href="{{ route('permission.destroy',$data) }}" type="button"
+                                    class="btn btn-sm btn-danger float-right delete_check">
+                                    <i class="bx bx-trash-alt me-1"></i>
+                                </button>
+                                @endif
 
+                            </td>
+                        </tr>
+                        @empty
 
-                                        <a href="{{ route('permission.edit', $data->id) }}"
-                                            class="btn btn-sm btn-secondary float-right">
-                                            <i class="bx bx-edit-alt me-1"></i>
-                                        </a>
-                                        <button data-href="{{ route('permission.destroy',$data) }}" type="button"
-                                            class="btn btn-sm btn-danger float-right delete_check">
-                                            <i class="bx bx-trash-alt me-1"></i>
+                        @endforelse
 
-                                        </button>
-
-                                </td>
-                            </tr>
-                            @empty
-
-                            @endforelse
-
-                        </tbody>
+                    </tbody>
                     </table>
                 </div>
                 <div class="d-flex">

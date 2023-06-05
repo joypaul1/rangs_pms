@@ -24,7 +24,9 @@ class PermissionsServiceProvider extends ServiceProvider
     {
         try {
             Permission::get()->map(function ($permission) {
+                // dd(123123,$permission->slug);
                 Gate::define($permission->slug, function ($user) use ($permission) {
+                    // dd($user, $permission,$user->hasPermissionTo($permission));
                     return $user->hasPermissionTo($permission);
                 });
             });
