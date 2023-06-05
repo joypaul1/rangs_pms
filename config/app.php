@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-        Yajra\Oci8\Oci8ServiceProvider::class,
+        // Yajra\Oci8\Oci8ServiceProvider::class,
         App\Providers\PermissionsServiceProvider::class,
 
         /*
