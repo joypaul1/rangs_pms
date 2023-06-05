@@ -49,7 +49,6 @@
                                     }}</label>
                                 <hr>
 
-
                                 @forelse ($roles as $role)
                                 <div class="form-check form-check-inline col-3">
                                     <input class="form-check-input" type="checkbox" name="role_id[]"
@@ -64,9 +63,6 @@
                                 @empty
 
                                 @endforelse
-
-
-
                             </div>
                         </div>
 

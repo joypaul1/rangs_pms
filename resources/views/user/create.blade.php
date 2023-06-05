@@ -109,12 +109,12 @@
 
         <div class="card border-top">
             @yield('table_header')
+            <form method="POST" action="{{ route('user.store') }}">
+                @csrf
+            <div class="card-body row">
+                <div class="col-lg-6">
 
-            <div class="card-body">
-                <div class="col-6">
 
-                    <form method="POST" action="{{ route('user.store') }}">
-                        @csrf
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
@@ -198,16 +198,37 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-6">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Submit') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form> 
+
 
                 </div>
+                <div class="col-lg-6">
+                    <label for="name" class="col-12 col-form-label text-md-center">{{ __('All Role')
+                        }}</label>
+                    <hr>
+
+                    @forelse ($roles as $role)
+                    <div class="form-check form-check-inline col-12">
+                        <input class="form-check-input" type="checkbox" name="role_id[]"
+                            id="checkbox{{$role->id}}" value="{{$role->id}}">
+                        <label class="form-check-label" for="checkbox{{$role->id}}">{{$role->name}}</label>
+                    </div>
+                    @error('role_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    @empty
+
+                    @endforelse
+                </div>
+                <div class="row mb-0">
+                    <div class="text-center mx-auto">
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Submit') }}
+                        </button>
+                    </div>
+                </div>
+            </form>
             </div>
         </div>
     </div>

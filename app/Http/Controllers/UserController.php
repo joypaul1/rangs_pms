@@ -6,7 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\DB;
+use App\Models\Role;
 class UserController extends Controller
 {
     /**
@@ -27,7 +28,9 @@ class UserController extends Controller
     public function create()
     {
         if (auth()->user()->can('user-create')) {
-            return view('user.create');
+            $roles = Role::select('id', 'name')->get();
+
+            return view('user.create', compact('roles'));
         }
         abort(403, "You have no permission! 😒");
     }
@@ -48,15 +51,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         if (auth()->user()->can('user-create')) {
             $this->validator($request->all());
-            $user = User::create([
-                'name' => $request['name'],
-                'mobile' => $request['mobile'],
-                'email' => $request['email'],
-                'user_id' => $request['user_id'],
-                'password' => Hash::make($request['password']),
-            ]);
+
+            try {
+                DB::beginTransaction();
+                $user = User::create([
+                    'name' => $request['name'],
+                    'mobile' => $request['mobile'],
+                    'email' => $request['email'],
+                    'user_id' => $request['user_id'],
+                    'password' => Hash::make($request['password']),
+                ]);
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
+
             return redirect()->route('user.index')->with('success', 'User has been created successfully');
         }
         abort(403, "You have no permission! 😒");
