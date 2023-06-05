@@ -64,6 +64,17 @@ class UserController extends Controller
                     'user_id' => $request['user_id'],
                     'password' => Hash::make($request['password']),
                 ]);
+                if ($request->role_id) {
+                    $user = User::find($user->id);
+                    for ($i = 0; $i < count($request->role_id); $i++) {
+                        $user_role = Role::whereId($request->role_id[$i])->with('permissions')->first();
+                        $user_permissions =  $user_role->permissions;
+                        $user->roles()->attach($user_role);
+                        foreach ($user_permissions as $key => $user_perm) {
+                            $user->permissions()->attach($user_perm);
+                        }
+                    }
+                }
                 DB::commit();
             } catch (\Exception $ex) {
                 DB::rollBack();
