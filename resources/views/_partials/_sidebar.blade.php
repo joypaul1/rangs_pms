@@ -103,7 +103,7 @@ $strpos = Route::currentRouteName();
         </li>
         {{-- End tour Panel --}}
         {{-- report Panel --}}
-        <li class="menu-item  {{ strpos($strpos, 'report') === 0 ? 'active open' : ' ' }}
+        {{-- <li class="menu-item  {{ strpos($strpos, 'report') === 0 ? 'active open' : ' ' }}
          ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -116,7 +116,7 @@ $strpos = Route::currentRouteName();
                     link='tour.index' />
 
             </ul>
-        </li>
+        </li> --}}
         {{-- End tour Panel --}}
 
         {{-- pms Panel --}}
@@ -127,8 +127,8 @@ $strpos = Route::currentRouteName();
                 <div data-i18n="Layouts">PMS Module </div>
             </a>
             <ul class="menu-sub">
-                <x-backend.side-bar class="{{ request()->segment(2) == 'pms' ? 'active' : ' ' }}" name="PMS List"
-                    link='tour.create' />
+                <x-backend.side-bar class="{{ request()->segment(2) == 'home' ? 'active' : ' ' }}" name="PMS List"
+                    link='pmsConfig.home.index' />
                 <x-backend.side-bar class="{{ request()->segment(2) == 'year' ? 'active' : ' ' }}" name="PMS Year"
                     link='pmsConfig.year.index' />
                 <x-backend.side-bar class="{{ request()->segment(2) == 'kra' ? 'active' : ' ' }}" name="KRA"
