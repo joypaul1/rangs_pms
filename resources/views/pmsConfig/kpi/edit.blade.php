@@ -33,9 +33,7 @@
                             Created KPI List
                         </h4>
                         <hr>
-                        <div class="row" style="
-                            border: 1px solid #e9e4e4;
-                            padding: 2%;">
+                        <div class="row" style="border: 1px solid #e9e4e4; padding: 2%;">
 
                             <div class="col-6 mb-2">
                                 <label class="form-label" for="name"> KPI Text <strong
