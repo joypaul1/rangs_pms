@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class RoleController extends Controller
@@ -41,11 +42,14 @@ class RoleController extends Controller
                 'name' => 'required|unique:roles,name',
             ]);
             try {
+                DB::beginTransaction();
                 Role::create([
                     'name' => $request->name,
                     'slug' => Str::slug($request->name),
                 ]);
+                DB::commit();
             } catch (\Exception $ex) {
+                DB::rollBack();
                 return redirect()->back()->with('error',  $ex->getMessage());
             }
 
@@ -84,11 +88,14 @@ class RoleController extends Controller
                 'name' => 'required|unique:roles,name,' . $id,
             ]);
             try {
+                DB::beginTransaction();
                 Role::whereId($id)->update([
                     'name' => $request->name,
                     'slug' => Str::slug($request->name),
                 ]);
+                DB::commit();
             } catch (\Exception $ex) {
+                DB::rollBack();
                 return redirect()->back()->with('error',  $ex->getMessage());
             }
 
@@ -104,8 +111,11 @@ class RoleController extends Controller
     {
         if (auth()->user()->can('role-delete')) {
             try {
+                DB::beginTransaction();
                 $role->delete();
+                DB::commit();
             } catch (\Exception $ex) {
+                DB::rollBack();
                 return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
             }
             return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);

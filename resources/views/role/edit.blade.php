@@ -27,6 +27,8 @@
                             <label class="form-label" for="name"> Name</label>
                             <input type="text" name="name" class="form-control" value="{{$role->name}}" id="name" placeholder="Role Name.."
                                 required>
+                                <small class="text-danger">{{ $errors->first('name') }}</small>
+
                         </div>
 
                         <div class="b-block text-right">

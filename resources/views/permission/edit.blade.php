@@ -74,6 +74,7 @@
                             <label class="form-label" for="name"> Name</label>
                             <input type="text" name="name" class="form-control" id="name"
                                 placeholder="Permission Name.." value="{{$permission->name}}" required>
+                                <small class="text-danger">{{ $errors->first('name') }}</small>
                         </div>
 
                         <div class="b-block text-right">

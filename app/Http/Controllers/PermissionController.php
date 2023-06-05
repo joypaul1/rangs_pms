@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PermissionController extends Controller
@@ -40,10 +41,17 @@ class PermissionController extends Controller
             $request->validate([
                 'name' => 'required|unique:permissions,name',
             ]);
-            Permission::create([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name),
-            ]);
+            try {
+                DB::beginTransaction();
+                Permission::create([
+                    'name' => $request->name,
+                    'slug' => Str::slug($request->name),
+                ]);
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
 
             return redirect()->route('permission.index')->with('success', 'permission has been created successfully.');
         }
@@ -81,12 +89,15 @@ class PermissionController extends Controller
                 $request->validate([
                     'name' => 'required|unique:permissions,name,' . $id,
                 ]);
+                DB::beginTransaction();
                 Permission::whereId($id)->update([
                     'name' => $request->name,
                     'slug' => Str::slug($request->name),
                 ]);
+                DB::commit();
             } catch (\Exception $ex) {
-                return redirect()->back()->with('error', $ex->getMessage());
+                DB::rollBack();
+                return redirect()->back()->with('error',  $ex->getMessage());
             }
             return redirect()->route('permission.index')->with('success', 'permission has been created successfully.');
         }
@@ -100,8 +111,11 @@ class PermissionController extends Controller
     {
         if (auth()->user()->can('permission-delete')) {
             try {
+                DB::beginTransaction();
                 $permission->delete();
+                DB::commit();
             } catch (\Exception $ex) {
+                DB::rollBack();
                 return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
             }
             return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);

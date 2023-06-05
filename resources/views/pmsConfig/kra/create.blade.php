@@ -39,12 +39,17 @@
                         <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter kra Name..."
                             required>
+                        <small class="text-danger">{{ $errors->first('name') }}</small>
+
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="note"> Note</label>
                         <input type="text" name="note" class="form-control" id="note" placeholder="Enter note...">
+                        <small class="text-danger">{{ $errors->first('note') }}</small>
+
                     </div>
                     <input type="hidden" name="pms_year_id" value="{{$year->id}}">
+                    <small class="text-danger">{{ $errors->first('pms_year_id') }}</small>
 
                     <div class="cards">
                         <div class="row" style="border: 1px solid #e9e4e4; padding: 2%;">
@@ -68,7 +73,9 @@
 
                                     <input type="text" name="target[]"
                                         onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="target"
-                                        class="form-control target" placeholder="100" required autocomplete="off">
+                                        class="form-control" placeholder="100" required autocomplete="off">
+                                    <small class="text-danger">{{ $errors->first('target') }}</small>
+
 
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
@@ -77,14 +84,18 @@
 
                                     <input type="text" name="complite[]"
                                         onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="complite"
-                                        class="form-control complite" placeholder="100%" required autocomplete="off">
+                                        class="form-control" placeholder="100%" required autocomplete="off">
+                                    <small class="text-danger">{{ $errors->first('complite') }}</small>
+
 
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
-                                    <label class="form-label" for="complite"> Any Remark ? </label>
+                                    <label class="form-label" for="remark"> Any Remark ? </label>
 
-                                    <input type="text" name="remark[]" id="complite" class="form-control complite"
+                                    <input type="text" name="remark[]" id="remark" class="form-control"
                                         placeholder="....." autocomplete="off">
+                                    <small class="text-danger">{{ $errors->first('remark') }}</small>
+
 
                                 </div>
                             </div>
