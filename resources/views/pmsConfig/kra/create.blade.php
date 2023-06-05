@@ -12,52 +12,46 @@
 @section('content')
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class=" col-lg-12">
 
-        <div class="card border-top">
-            @yield('table_header')
-            <div class="col-4 align-items-center justify-content-center text-center " style="width:100%; height:100%">
-                <strong class="border border-secondary  text-white" style="
+        <form method="POST" action="{{ route('pmsConfig.kra.store') }}">
+            @csrf
+            <div class="card border-top">
+                @yield('table_header')
+                <div class="col-4 justify-content-center text-center " style="width:100%; height:100%;margin:1%;">
+                    <strong class="border border-secondary  text-white" style="
                         background: cadetblue;
                         box-shadow: 1px 1px 3px 1px gray;
-                    ">Active PMS Year For
-                    <br>
-                    <span>
-                        {{$year->name}}
-                    </span>
+                        padding:1%
+                    ">Active PMS Year For {{$year->name}}
+                        {{-- <br>
+                        <span>
+                            {{$year->name}}
+                        </span> --}}
 
-                </strong>
-
-            </div>
-            <div class="card-body row">
-                <div class="">
-
-                    <form method="POST" action="{{ route('pmsConfig.kra.store') }}">
-                        @csrf
-                        <div class=" mb-3">
-                            <label class="form-label" for="name"> kRA Name <strong
-                                    class="text-danger">*</strong></label>
-                            <input type="text" name="name" class="form-control" id="name"
-                                placeholder="Enter kra Name..." required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="note"> Note</label>
-                            <input type="text" name="note" class="form-control" id="note" placeholder="Enter note...">
-                        </div>
-                        <input type="hidden" name="pms_year_id" value="{{$year->id}}">
-                        {{-- <div class="b-block text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div> --}}
-                    </form>
+                    </strong>
 
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4>
-                            Created KPI List
-                        </h4>
-                        <hr>
+                <div class="card-body row">
+
+
+                    <div class=" mb-3">
+                        <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter kra Name..."
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="note"> Note</label>
+                        <input type="text" name="note" class="form-control" id="note" placeholder="Enter note...">
+                    </div>
+                    <input type="hidden" name="pms_year_id" value="{{$year->id}}">
+
+                    <div class="cards">
                         <div class="row" style="border: 1px solid #e9e4e4; padding: 2%;">
+                            <h5 class="text-center">
+                                Created KPI List <i class="menu-icon tf-icons bx bx-edit-alt"></i>
+                            </h5>
+                            <hr>
 
                             <div class="col-sm-12 col-md-12 col-lg-6  mb-2">
                                 <label class="form-label" for="name"> KPI Text <strong
@@ -96,7 +90,7 @@
                             </div>
                             <div class="row justify-content-end">
                                 <div class="col-2">
-                                    <button type="button" class="btn btn-sm btn-info chief_add">
+                                    <button type="button" class="btn btn-sm btn-info kpi_add">
                                         <i class="menu-icon tf-icons bx bx-message-alt-add"></i>
                                     </button>
                                     <button type="button" class="btn btn-sm btn-danger chief_remove">
@@ -106,13 +100,23 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <div id="chief_complaints" style="width:100%"></div>
                         </div>
-                        <div id="chief_complaints" style="width:100%"></div>
                     </div>
                 </div>
+                <div class="b-block text-center mb-5">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-        </div>
+
+        </form>
     </div>
 </div>
 
 @endsection
+@push('js')
+<script>
+
+</script>
+@endpush

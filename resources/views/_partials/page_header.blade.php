@@ -1,6 +1,6 @@
 
 <div class="card">
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header d-flex align-items-center justify-content-between" style="padding: 1.5% 1.5rem">
         <div href="#" style="font-size: 20px;font-weight:700">
             @yield('page-header')
         </div>
