@@ -162,6 +162,7 @@ $strpos = Route::currentRouteName();
         </li>
         {{-- End pms Panel --}}
         {{-- Role Permission Panel --}}
+        @if(auth()->user()->can('role-list'))
         <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'role-permission') === 0 ? 'active open' : ' ' }}
@@ -172,34 +173,59 @@ $strpos = Route::currentRouteName();
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Role Permission </div>
             </a>
+
             <ul class="menu-sub">
+                @if(auth()->user()->can('role-list'))
                 <x-backend.side-bar class="{{ request()->segment(1) =='role' ? 'active' : ' ' }}" name="role"
                     link='role.index' />
+                @endif
+                @if(auth()->user()->can('role-list'))
+
                 <x-backend.side-bar class="{{ request()->segment(1) =='permission' ? 'active' : ' ' }}"
                     name="permission" link='permission.index' />
+                @endif
+
+                @if(auth()->user()->can('role-permission-list'))
+
                 <x-backend.side-bar class="{{ request()->segment(1) == 'role-permission' ? 'active' : ' ' }}"
                     name="role-permission" link='role-permission.index' />
+                @endif
+
+                @if(auth()->user()->can('user-role-list'))
+
                 <x-backend.side-bar class="{{ request()->segment(1) == 'user-role' ? 'active' : ' ' }}" name="user-role"
                     link='user-role.index' />
+                @endif
 
             </ul>
         </li>
+        @endif
+
         {{-- End Role Permission Panel --}}
 
         {{-- tour Panel --}}
+        @if(auth()->user()->can('user-list'))
         <li class="menu-item  {{ strpos($strpos, 'user') === 0 ? 'active open' : ' ' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">User Module </div>
             </a>
             <ul class="menu-sub">
+                @if(auth()->user()->can('user-list'))
+
                 <x-backend.side-bar class="{{ request()->is('user') ? 'active' : ' ' }}" name="List"
                     link='user.index' />
+                @endif
+
+                @if(auth()->user()->can('user-create'))
+
                 <x-backend.side-bar class="{{ request()->is('user/create') ? 'active' : ' ' }}" name="Create"
                     link='user.create' />
+                @endif
 
             </ul>
         </li>
+        @endif
         {{-- End tour Panel --}}
 
 

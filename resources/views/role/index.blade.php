@@ -59,7 +59,7 @@
                     </table>
                 </div>
                 <div class="d-flex">
-                    {!! $permissions->links() !!}
+                    {!! $roles->links() !!}
                 </div>
             </div>
         </div>

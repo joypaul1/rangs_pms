@@ -37,14 +37,18 @@
                             <td>{{ $data->name}}</td>
                             <td>{{ implode(' , ', $data->permissions->pluck('name')->toArray()) }}</td>
                             <td>
+                                @if (auth()->user()->can('role-permission-edit'))
                                 <a href="{{ route('role-permission.edit', $data) }}"
                                     class="btn btn-sm btn-secondary float-right">
                                     <i class="bx bx-edit-alt me-1"></i>
                                 </a>
+                                @endif
+                                @if (auth()->user()->can('role-permission-delete'))
                                 <button data-href="{{ route('role-permission.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-trash-alt me-1"></i>
                                 </button>
+                                @endif
 
 
                             </td>

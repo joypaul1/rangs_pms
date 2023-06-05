@@ -43,7 +43,7 @@
                                     <i class="bx bx-edit-alt me-1"></i>
                                 </a>
                                 @endif
-                                @if (auth()->user()->can('role-edit'))
+                                @if (auth()->user()->can('role-delete'))
                                 <button data-href="{{ route('permission.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-trash-alt me-1"></i>

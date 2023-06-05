@@ -73,15 +73,20 @@
                             <td>{{ $data->name}}</td>
                             <td>{{ implode(' , ', $data->roles->pluck('name')->toArray()) }}</td>
                             <td>
+                                @if (auth()->user()->can('user-role-edit'))
+
                                 <a href="{{ route('user-role.edit', $data->id) }}"
                                     class="btn btn-sm btn-secondary float-right">
                                     <i class="bx bx-edit-alt me-1"></i>
                                 </a>
+                                @endif
+                                @if (auth()->user()->can('user-role-delete'))
+
                                 <button data-href="{{ route('user-role.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-trash-alt me-1"></i>
                                 </button>
-
+                                @endif
 
                             </td>
                         </tr>
