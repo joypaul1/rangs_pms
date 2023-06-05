@@ -155,6 +155,8 @@ class RolePermissionConctroller extends Controller
                 DB::commit();
             } catch (\Exception $ex) {
                 DB::rollBack();
+                return response()->json(['status' => false, 'mes' => 'Sorry! This Data Related with others Data Table!']);
+
                 return back()->with('error', $ex->getMessage());
             }
             return redirect()->route('role-permission.index')->with('success', 'RolePermission has been deleted successfully.');

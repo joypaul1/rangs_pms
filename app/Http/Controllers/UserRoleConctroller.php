@@ -153,7 +153,9 @@ class UserRoleConctroller extends Controller
                 DB::commit();
             } catch (\Exception $ex) {
                 DB::rollBack();
-                return back()->with('error', $ex->getMessage());
+                return response()->json(['status' => false, 'mes' => 'Sorry! This Data Related with others Data Table!']);
+
+                // return back()->with('error', $ex->getMessage());
             }
             return redirect()->route('user-role.index')->with('success', 'UserRole has been deleted successfully.');
         }

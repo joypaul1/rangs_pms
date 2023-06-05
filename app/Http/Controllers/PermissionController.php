@@ -116,7 +116,9 @@ class PermissionController extends Controller
                 DB::commit();
             } catch (\Exception $ex) {
                 DB::rollBack();
-                return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+                return response()->json(['status' => false, 'mes' => 'Sorry! This Data Related with others Data Table!']);
+
+                // return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
             }
             return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);
         }
