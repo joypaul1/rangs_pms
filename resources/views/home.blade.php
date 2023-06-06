@@ -33,8 +33,8 @@
                     </div>
 
                 </div>
-                <span class="fw-semibold d-block text-center  mb-1">Confirmation Date</span>
-                <h3 class="card-title text-center mb-2">{{ date('d-m-Y') }}</h3>
+                <span class="fw-semibold d-block text-center  mb-1">Today's Date</span>
+                <h3 class="card-title text-center mb-2">{{ date('d-M-Y') }}</h3>
 
             </div>
         </div>
