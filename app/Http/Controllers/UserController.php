@@ -170,7 +170,7 @@ class UserController extends Controller
                         UserPermission::where([
                             ['user_id', $user->id],
                             ['permission_id', $role_perm->permission_id]
-                        ])->delete();
+                        ])->first()->delete();
                     }
                     //delete user role
                     UserRole::where('user_id', $id)->where('role_id', $deletedId)->delete();

@@ -13,6 +13,7 @@ use App\Http\Controllers\RolePermissionConctroller;
 use App\Http\Controllers\Tour\TourController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleConctroller;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RolePermission;
 use App\Models\User;
@@ -69,6 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::get('admin-role-permission', function () {
+    // dd(auth()->user()->can('pms-kra-list'));
+    return Permission::whereSlug('pms-kra-list')->first();
     // try {
     //     DB::beginTransaction();
     //     $user = User::with('roles', 'permissions')->first();

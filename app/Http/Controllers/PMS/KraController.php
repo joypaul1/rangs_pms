@@ -14,7 +14,7 @@ class KraController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->can('pms-kri-list')) {
+        if (auth()->user()->can('pms-kra-list')) {
             $years = KRA::where('user_id', auth()->user()->id)->orderBy('id', 'desc')
                 ->with('activeYear')
                 ->paginate(10);
@@ -28,7 +28,7 @@ class KraController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->can('pms-kri-create')) {
+        if (auth()->user()->can('pms-kra-create')) {
             $year = PMSYear::whereStatus(1)->first();
             return view('pmsConfig.kra.create', compact('year'));
         }
@@ -40,7 +40,7 @@ class KraController extends Controller
      */
     public function store(Request $request)
     {
-        if (auth()->user()->can('pms-kri-create')) {
+        if (auth()->user()->can('pms-kra-create')) {
             $request->validate([
                 'name' => 'required|string|unique:k_r_a_s,name',
                 'note' => 'nullable|string',
@@ -74,7 +74,7 @@ class KraController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->can('pms-kri-edit')) {
+        if (auth()->user()->can('pms-kra-edit')) {
             $kra = KRA::whereId($id)->with('year')->first();
             return view('pmsConfig.kra.edit', compact('kra'));
         }
@@ -86,7 +86,7 @@ class KraController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (auth()->user()->can('pms-kri-edit')) {
+        if (auth()->user()->can('pms-kra-edit')) {
             $request->validate([
                 'name' => 'required|string',
                 'note' => 'nullable|string',
@@ -110,7 +110,7 @@ class KraController extends Controller
      */
     public function destroy($id)
     {
-        if (auth()->user()->can('pms-kri-delete')) {
+        if (auth()->user()->can('pms-kra-delete')) {
             try {
                 DB::beginTransaction();
                 PMSYear::whereId($id)->delete();

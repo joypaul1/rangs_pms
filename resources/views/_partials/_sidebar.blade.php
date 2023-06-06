@@ -149,7 +149,6 @@ $strpos = Route::currentRouteName();
                     link='pmsConfig.year.index' />
                 @endif
                 @if(auth()->user()->can('pms-kra-list'))
-
                 <x-backend.side-bar class="{{ request()->segment(2) == 'kra' ? 'active' : ' ' }}" name="KRA"
                     link='pmsConfig.kra.index' />
                 @endif
