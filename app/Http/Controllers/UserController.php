@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Role;
+
 class UserController extends Controller
 {
     /**
@@ -62,7 +63,7 @@ class UserController extends Controller
                     'mobile' => $request['mobile'],
                     'email' => $request['email'],
                     'user_id' => $request['user_id'],
-                    'password' => Hash::make($request['password']),
+                    'password' => md5($request['password']),
                 ]);
                 if ($request->role_id) {
                     $user = User::find($user->id);
@@ -81,7 +82,7 @@ class UserController extends Controller
                 return redirect()->back()->with('error',  $ex->getMessage());
             }
 
-            return redirect()->route('user.index')->with('success', 'User has been created successfully');
+            return redirect()->route('user.index')->with('success', 'User has been created successfully.');
         }
         abort(403, "You have no permission! 😒");
     }

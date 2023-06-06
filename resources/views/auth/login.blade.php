@@ -56,9 +56,8 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="d-flex justify-content-center mb-2">
-                            <img  class="" src="{{ asset('assets/rangs.png') }}" alt=""
-                            width="50%"
-                              style="box-shadow: 2px 2px 6px 1px #1f4698;"  >
+                            <img class="" src="{{ asset('assets/rangs.png') }}" alt="" width="50%"
+                                style="box-shadow: 2px 2px 6px 1px #1f4698;">
 
                         </div>
                         <div class="app-brand justify-content-center border border-secondary" style="margin:0%">
@@ -118,9 +117,8 @@
                         </div>
                         <!-- /Logo -->
                         {{-- <div class="d-flex justify-content-center mt-2">
-                            <img  class="" src="{{ asset('assets/rangs.png') }}" alt=""
-                            style="box-shadow: 2px 2px 6px 1px #1f4698;"
-                            >
+                            <img class="" src="{{ asset('assets/rangs.png') }}" alt=""
+                                style="box-shadow: 2px 2px 6px 1px #1f4698;">
 
                         </div> --}}
                         <h4 class="mt-4 mb-2 text-center">Welcome to Rangs Group! 👋</h4>
@@ -133,6 +131,11 @@
                                 <label for="user_id" class="form-label">USER ID</label>
                                 <input type="text" class="form-control" id="user_id" name="user_id"
                                     placeholder="Enter your User Id" value="RML-01260" autocomplete="off" autofocus />
+                                @error('user_id')
+
+                                <strong class="text-danger">{{ $message }}</strong>
+
+                                @enderror
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
@@ -140,11 +143,14 @@
 
                                 </div>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" value="1234567890" class="form-control" name="password"
-                                        placeholder="******"
-                                        aria-describedby="password" autocomplete="off" />
+                                    <input type="password" id="password" value="1234567890" class="form-control"
+                                        name="password" placeholder="******" aria-describedby="password"
+                                        autocomplete="off" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
+                                @error('password')
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                @enderror
                             </div>
 
                             <div class="mb-3">

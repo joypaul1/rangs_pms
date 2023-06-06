@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserPermission extends Model
 {
-    use HasFactory;
+    // use HasFactory;
+    protected $table  = 'users_permissions';
+
+    protected $guarded = ['id'];
+
 }
