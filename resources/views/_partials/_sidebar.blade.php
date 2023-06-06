@@ -191,11 +191,11 @@ $strpos = Route::currentRouteName();
                     name="role-permission" link='role-permission.index' />
                 @endif
 
-                @if(auth()->user()->can('user-role-list'))
+            {{-- @if(auth()->user()->can('user-role-list'))
 
-                <x-backend.side-bar class="{{ request()->segment(1) == 'user-role' ? 'active' : ' ' }}" name="user-role"
-                    link='user-role.index' />
-                @endif
+            <x-backend.side-bar class="{{ request()->segment(1) == 'user-role' ? 'active' : ' ' }}" name="user-role"
+                link='user-role.index' />
+            @endif --}}
 
             </ul>
         </li>
