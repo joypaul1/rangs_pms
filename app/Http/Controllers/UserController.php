@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Role;
+use App\Models\RolePermission;
+use App\Models\UserPermission;
+use App\Models\UserRole;
 
 class UserController extends Controller
 {
@@ -114,16 +117,126 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         if (auth()->user()->can('user-edit')) {
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'mobile' => 'required|string|unique:users,mobile, ' . $id,
+                'user_id' => 'required|string|unique:users,user_id,' . $id,
+                'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+                'password' => ['nullable', 'string', 'min:4', 'confirmed'],
+            ]);
+            try {
+                DB::beginTransaction();
+                $user =  User::whereId($id)->first();
+                $user->update([
+                    'name' => $request['name'],
+                    'mobile' => $request['mobile'],
+                    'email' => $request['email'],
+                    'user_id' => $request['user_id']
+                ]);
+                if ($request->password) {
+                    $user->update(['password' => md5($request['password'])]);
+                }
+                if ($request->role_id) {
+                    $this->setRolePermission($request, $id, $user);
+                }else{
+                    $this->deleteRolePermission($user);
+
+                }
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                return redirect()->back()->with('error',  $ex->getMessage());
+            }
+            return redirect()->route('user.index')->with('success', 'User has been Updated successfully.');
         }
         abort(403, "You have no permission! 😒");
     }
 
+    private function setRolePermission($request, $id, $user)
+    {
+        $deletedIds = [];
+        $insertIds = [];
+        $getallRole = UserRole::where('user_id', $id)->get();
+        if (count($getallRole) > 0) {
+            //update user role
+            $deletedIds = array_diff($getallRole->pluck('role_id')->toArray(), $request->role_id);
+            $insertIds  = array_diff($request->role_id, $getallRole->pluck('role_id')->toArray());
+            if (count($deletedIds) > 0) {
+                foreach ($deletedIds as $key => $deletedId) {
+                    $role_permissions = RolePermission::whereRoleId($deletedId)->get();
+                    //delete role wise user permission
+                    foreach ($role_permissions as $key => $role_perm) {
+                        UserPermission::where([
+                            ['user_id', $user->id],
+                            ['permission_id', $role_perm->permission_id]
+                        ])->delete();
+                    }
+                    //delete user role
+                    UserRole::where('user_id', $id)->where('role_id', $deletedId)->delete();
+                }
+            }
+            if (count($insertIds) > 0) {
+                foreach ($insertIds as $key => $insertId) {
+                    //create user role
+                    UserRole::insert([
+                        'user_id' =>  $id,
+                        'role_id' => $insertId,
+                    ]);
+                    $role_permissions = RolePermission::whereRoleId($insertId)->get();
+                    //create role wise user permission
+                    foreach ($role_permissions as $key => $role_perm) {
+                        UserPermission::insert([
+                            'user_id' => $user->id,
+                            'permission_id' => $role_perm->permission_id,
+                        ]);
+                    }
+                }
+            }
+        } else {
+            //create new user role
+            for ($i = 0; $i < count($request->role_id); $i++) {
+                //create user role
+                UserRole::insert([
+                    'user_id' =>  $id,
+                    'role_id' => $request->role_id[$i],
+                ]);
+                $role_permissions = RolePermission::whereRoleId($request->role_id[$i])->get();
+                //create role wise user permission
+                foreach ($role_permissions as $key => $role_perm) {
+                    UserPermission::insert([
+                        'user_id' => $user->id,
+                        'permission_id' => $role_perm->permission_id,
+                    ]);
+                }
+            }
+        }
+    }
+
+
+    private  function deleteRolePermission( $user)
+    {
+        $getPermission = UserPermission::whereUserId($user->id)->get();
+        $getRole = UserRole::whereUserId($user->id)->get();
+
+        if(count( $getPermission ) > 0){
+            foreach ($getPermission as $key => $perm) {
+                $perm->delete();
+            }
+        }
+        if(count( $getRole ) > 0){
+            foreach ($getRole as $key => $role) {
+                $role->delete();
+            }
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         if (auth()->user()->can('user-delete')) {
+            dd($id);
         }
         abort(403, "You have no permission! 😒");
     }

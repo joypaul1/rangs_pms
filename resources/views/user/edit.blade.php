@@ -18,6 +18,7 @@
             @yield('table_header')
             <form method="POST" action="{{ route('user.update', $user) }}">
                 @csrf
+                @method('PUT')
                 <div class="card-body row">
                     <div class="col-lg-6">
 
@@ -34,7 +35,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Mobile') }}</label>
 
@@ -85,7 +86,7 @@
                             <div class="col-md-6">
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
-                                    required autocomplete="new-password">
+                                    autocomplete="new-password">
 
                                 @error('password')
                                 <strong class="text-danger">{{ $message }}</strong>
@@ -100,7 +101,7 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation" required autocomplete="new-password">
+                                    name="password_confirmation" autocomplete="new-password">
                                 @error('password_confirmation')
                                 <strong class="text-danger">{{ $message }}</strong>
 
@@ -122,8 +123,8 @@
                         @forelse ($roles as $role)
                         <div class="form-check form-check-inline col-12">
                             <input class="form-check-input" type="checkbox" name="role_id[]" id="checkbox{{$role->id}}"
-                            @if(in_array($role->id,$getAllRole))
-                                @checked(true)
+                                @if(in_array($role->id,$getAllRole))
+                            @checked(true)
                             @endif
                             value="{{$role->id}}">
                             <label class="form-check-label" for="checkbox{{$role->id}}">{{$role->name}}</label>

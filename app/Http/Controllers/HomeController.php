@@ -132,7 +132,7 @@ class HomeController extends Controller
             $user->email = 'test_user@gmail.com';
             $user->password = Hash::make('1234567890');
             $user->save();
-            $user->roles()->attach($user_role);
+            
             $user->permissions()->attach($user_perm);
 
             $admin = new User();
