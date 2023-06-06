@@ -5,10 +5,21 @@
 @section('table_header')
 @include('_partials.page_header', [
 'fa' => 'list-ul',
-'name' => ' Pms-KPI List',
+'name' => 'KPI List',
 'route' => route('pmsConfig.kra.index')
 ])
 @stop
+
+@push('css')
+    <style>
+        table thead{
+            background: #c5c4c4;
+        }
+        table tbody tr{
+            font-size: 12px;    
+        }
+    </style>
+@endpush
 @section('content')
 
 <div class="row">
@@ -18,7 +29,7 @@
             @yield('table_header')
             <div class="card">
                 <div class="card-header">
-                    <input type="text" class="form-control" value="KPI NAME" disabled>
+                    <input type="text" class="form-control" value="KRA NAME" disabled>
                 </div>
                 {{-- <h5 class="text-center">
                     Create KPI List <i class="menu-icon tf-icons bx bx-edit-alt"></i>
@@ -64,6 +75,49 @@
                         <button type="button" class="btn btn-sm btn-danger kpi_remove">
                             <i class="fa-solid fa-minus"></i>
                         </button>
+                    </div>
+                    <div class="b-block text-right mt-3">
+                        <button type="submit" class="btn btn-info">
+                            <i class="menu-icon tf-icons bx bx-save" style="margin:0;"></i> Submit</button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap"">
+                        <table class=" table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Target </th>
+                                <th>Complete</th>
+                                <th>Remark</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{ 'KPI TEXT' }}</td>
+                                <td>{{ "TARGET"}}</td>
+                                <td>{{ 'COMPLITE '}}</td>
+                                <td>{{ 'REMARK'}}</td>
+                                <td>
+                                    <a href="#"
+                                        class="btn btn-sm btn-warning float-right">
+                                        <i class="fa fa-pencil bx-burst bx-border-circle"></i>
+                                    </a>
+                                    {{-- <button data-href="{{ route('pmsConfig.kpi.destroy',$data) }}" type="button"
+                                        class="btn btn-sm btn-danger float-right delete_check">
+                                        <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i> --}}
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                        </table>
                     </div>
                 </div>
 

@@ -5,7 +5,7 @@
 @section('table_header')
 @include('_partials.page_header', [
 'fa' => 'list-ul',
-'name' => ' Pms-KRA List',
+'name' => 'KRA List',
 'route' => route('pmsConfig.kra.index')
 ])
 @stop
@@ -37,10 +37,12 @@
                             <i class="fa-solid fa-minus"></i>
                         </button>
                     </div>
+                    <div class="b-block text-right mt-3">
+                        <button type="submit" class="btn btn-info">
+                            <i class="menu-icon tf-icons bx bx-save" style="margin:0;"></i> Submit</button>
+                    </div>
                 </div>
-                <div class="b-block text-center mb-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+
             </div>
 
         </form>
