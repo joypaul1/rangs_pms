@@ -16,7 +16,7 @@
             background: #c5c4c4;
         }
         table tbody tr{
-            font-size: 12px;    
+            font-size: 12px;
         }
     </style>
 @endpush
@@ -108,9 +108,9 @@
                                         class="btn btn-sm btn-warning float-right">
                                         <i class="fa fa-pencil bx-burst bx-border-circle"></i>
                                     </a>
-                                    {{-- <button data-href="{{ route('pmsConfig.kpi.destroy',$data) }}" type="button"
+                                    <button data-href="#" type="button"
                                         class="btn btn-sm btn-danger float-right delete_check">
-                                        <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i> --}}
+                                        <i class="fa fa-trash bx-burst bx-border-circle"></i>
 
                                 </td>
 
