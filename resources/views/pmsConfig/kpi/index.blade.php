@@ -5,9 +5,9 @@
 @stop
 @section('table_header')
 @include('_partials.page_header', [
-// 'fa' => 'message-alt-add',
-// 'name' => 'Create Pms-KRA',
-// 'route' => route('pmsConfig.kpi.create')
+'fa' => 'message-alt-add',
+'name' => 'Demo Kpi Form',
+'route' => route('pmsConfig.kpi.create')
 ])
 @stop
 @section('content')

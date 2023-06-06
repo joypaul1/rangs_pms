@@ -34,13 +34,11 @@
                             <i class="fa-solid fa-plus"></i>
                         </button>
                         <button type="button" class="btn btn-sm btn-danger kra_remove">
-
                             <i class="fa-solid fa-minus"></i>
-
                         </button>
                     </div>
                 </div>
-                <div class="b-block text-center mb-5">
+                <div class="b-block text-center mb-2">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
@@ -53,7 +51,7 @@
 @push('js')
 <script>
     $(document).on('click', '.kra_add', function() {
-        let html = ` <div class="mb-3">
+        let html = `<div class="mb-3">
                         <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
                         <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..."
                             required>
