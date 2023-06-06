@@ -28,6 +28,8 @@
                             <th>Employee ID</th>
                             <th>Email</th>
                             <th>Mobile</th>
+                            <th>ALL Role</th>
+
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -40,19 +42,20 @@
                             <td>{{ $data->user_id}}</td>
                             <td>{{ $data->email}}</td>
                             <td>{{ $data->mobile}}</td>
+                            <td>{{ implode(' , ', $data->roles->pluck('name')->toArray()) }}</td>
                             <td>
-                                {{-- <form action="{{ route('role-permission.destroy', $data->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <a href="{{ route('role-permission.edit', $data->id) }}"
-                                        class="btn btn-sm btn-secondary float-right">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <button type="submit" class="btn btn-sm btn-danger float-right">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form> --}}
+                                @if (auth()->user()->can('user-edit'))
+                                <a href="{{ route('user.edit', $data->id) }}"
+                                    class="btn btn-sm btn-secondary float-right">
+                                    <i class="bx bx-edit-alt me-1"></i>
+                                </a>
+                                @endif
+                                @if (auth()->user()->can('user-delete'))
+                                <button data-href="{{ route('user.destroy',$data) }}" type="button"
+                                    class="btn btn-sm btn-danger float-right delete_check">
+                                    <i class="bx bx-trash-alt me-1"></i>
+                                </button>
+                                @endif
                             </td>
                             @empty
 

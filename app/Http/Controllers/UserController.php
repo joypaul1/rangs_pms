@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         if (auth()->user()->can('user-list')) {
-            $users = User::all();
+            $users = User::with('roles')->get();
             return view('user.index', compact('users'));
         }
         abort(403, "You have no permission! 😒");
@@ -101,6 +101,9 @@ class UserController extends Controller
     public function edit(string $id)
     {
         if (auth()->user()->can('user-edit')) {
+            $roles = Role::select('id', 'name')->get();
+            $user = User::whereId($id)->with('roles')->first();
+            return view('user.edit', compact('roles', 'user'));
         }
         abort(403, "You have no permission! 😒");
     }

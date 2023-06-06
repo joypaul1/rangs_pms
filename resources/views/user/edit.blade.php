@@ -16,38 +16,35 @@
 
         <div class="card border-top">
             @yield('table_header')
-            <form method="POST" action="{{ route('user.store') }}">
+            <form method="POST" action="{{ route('user.update', $user) }}">
                 @csrf
                 <div class="card-body row">
                     <div class="col-lg-6">
-
-
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" value="{{ old('name') }}" required autofocus>
+                                    name="name" value="{{ $user->name }}" required autofocus>
 
                                 @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong class="text-danger">{{ $message }}</strong>
+
                                 @enderror
                             </div>
                         </div>
+                        
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Mobile') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('mobile') is-invalid @enderror"
-                                    name="mobile" value="{{ old('mobile') }}" required autofocus>
+                                    name="mobile" value="{{ $user->mobile }}" required autofocus>
 
                                 @error('mobile')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong class="text-danger">{{ $message }}</strong>
+
                                 @enderror
                             </div>
                         </div>
@@ -57,12 +54,12 @@
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('user_id') is-invalid @enderror"
-                                    name="user_id" value="{{ old('user_id') }}" required autofocus>
+                                    name="user_id" value="{{ $user->user_id }}" required autofocus>
 
                                 @error('user_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+
+                                <strong class="text-danger">{{ $message }}</strong>
+
                                 @enderror
                             </div>
                         </div>
@@ -72,18 +69,17 @@
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    name="email" value="{{ $user->email }}" required autocomplete="email">
 
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong class="text-danger">{{ $message }}</strong>
+
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password')
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('New Password')
                                 }}</label>
 
                             <div class="col-md-6">
@@ -92,9 +88,8 @@
                                     required autocomplete="new-password">
 
                                 @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong class="text-danger">{{ $message }}</strong>
+
                                 @enderror
                             </div>
                         </div>
@@ -106,12 +101,19 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control"
                                     name="password_confirmation" required autocomplete="new-password">
+                                @error('password_confirmation')
+                                <strong class="text-danger">{{ $message }}</strong>
+
+                                @enderror
                             </div>
                         </div>
 
 
 
                     </div>
+                    @php
+                    $getAllRole = ($user->roles()->pluck('role_id')->toArray());
+                    @endphp
                     <div class="col-lg-6">
                         <label for="name" class="col-12 col-form-label text-md-center">{{ __('All Role')
                             }}</label>
@@ -120,13 +122,15 @@
                         @forelse ($roles as $role)
                         <div class="form-check form-check-inline col-12">
                             <input class="form-check-input" type="checkbox" name="role_id[]" id="checkbox{{$role->id}}"
-                                value="{{$role->id}}">
+                            @if(in_array($role->id,$getAllRole))
+                                @checked(true)
+                            @endif
+                            value="{{$role->id}}">
                             <label class="form-check-label" for="checkbox{{$role->id}}">{{$role->name}}</label>
                         </div>
                         @error('role_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                        <strong class="text-danger">{{ $message }}</strong>
+
                         @enderror
                         @empty
 

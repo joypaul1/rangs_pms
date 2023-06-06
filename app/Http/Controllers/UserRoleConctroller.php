@@ -82,7 +82,6 @@ class UserRoleConctroller extends Controller
     public function edit(string $id)
     {
         if (auth()->user()->can('user-role-edit')) {
-
             $roles = Role::select('id', 'name')->get();
             $user = User::whereId($id)->select('id', 'name')->with('roles')->first();
             return    view('user_role.edit', compact('roles', 'user'));
