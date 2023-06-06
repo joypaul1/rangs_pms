@@ -18,102 +18,27 @@
             @csrf
             <div class="card border-top">
                 @yield('table_header')
-                <div class="col-4 justify-content-center text-center " style="width:100%; height:100%;margin:1%;">
-                    <strong class="border border-secondary  text-white" style="
-                        background: cadetblue;
-                        box-shadow: 1px 1px 3px 1px gray;
-                        padding:1%
-                    ">Active PMS Year For {{$year->name}}
-                        {{-- <br>
-                        <span>
-                            {{$year->name}}
-                        </span> --}}
 
-                    </strong>
-
-                </div>
                 <div class="card-body row">
-
-
-                    <div class=" mb-3">
-                        <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter kra Name..."
-                            required>
-                        <small class="text-danger">{{ $errors->first('name') }}</small>
-
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="note"> Note</label>
-                        <input type="text" name="note" class="form-control" id="note" placeholder="Enter note...">
-                        <small class="text-danger">{{ $errors->first('note') }}</small>
-
-                    </div>
                     <input type="hidden" name="pms_year_id" value="{{$year->id}}">
                     <small class="text-danger">{{ $errors->first('pms_year_id') }}</small>
+                    <div class="mb-3">
+                        <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
+                        <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..."
+                            required>
+                        <small class="text-danger">{{ $errors->first('name') }}</small>
+                    </div>
+                    <div id="kra_dynamic" style="width:100%"></div>
 
-                    <div class="cards">
-                        <div class="row" style="border: 1px solid #e9e4e4; padding: 2%;">
-                            <h5 class="text-center">
-                                Created KPI List <i class="menu-icon tf-icons bx bx-edit-alt"></i>
-                            </h5>
-                            <hr>
+                    <div class=" text-right">
+                        <button type="button" class="btn btn-sm btn-info kra_add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger kra_remove">
 
-                            <div class="col-sm-12 col-md-12 col-lg-6  mb-2">
-                                <label class="form-label" for="name"> KPI Text <strong
-                                        class="text-danger">*</strong></label>
-                                <textarea name="name[]" id="" cols="30" rows="5"
-                                    style="width: 100%;border-color: lightgray;" required></textarea>
+                            <i class="fa-solid fa-minus"></i>
 
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-6  row">
-
-                                <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
-                                    <label class="form-label" for="target"> Target <strong
-                                            class="text-danger">*</strong></label>
-
-                                    <input type="text" name="target[]"
-                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="target"
-                                        class="form-control" placeholder="100" required autocomplete="off">
-                                    <small class="text-danger">{{ $errors->first('target') }}</small>
-
-
-                                </div>
-                                <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
-                                    <label class="form-label" for="complite"> Complite <strong
-                                            class="text-danger">*</strong></label>
-
-                                    <input type="text" name="complite[]"
-                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="complite"
-                                        class="form-control" placeholder="100%" required autocomplete="off">
-                                    <small class="text-danger">{{ $errors->first('complite') }}</small>
-
-
-                                </div>
-                                <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
-                                    <label class="form-label" for="remark"> Any Remark ? </label>
-
-                                    <input type="text" name="remark[]" id="remark" class="form-control"
-                                        placeholder="....." autocomplete="off">
-                                    <small class="text-danger">{{ $errors->first('remark') }}</small>
-
-
-                                </div>
-                            </div>
-                            <div class="row justify-content-end">
-                                <div class="col-2">
-                                    <button type="button" class="btn btn-sm btn-info kpi_add">
-                                        <i class="menu-icon tf-icons bx bx-message-alt-add"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger chief_remove">
-                                        {{-- <box-icon type='solid' name='message-alt-minus'></box-icon> --}}
-                                        <i class="menu-icon tf-icons bx bx-minus-circle"></i>
-
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div id="chief_complaints" style="width:100%"></div>
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div class="b-block text-center mb-5">
@@ -128,6 +53,29 @@
 @endsection
 @push('js')
 <script>
+    $(document).on('click', '.kra_add', function(){
+    let html =` <div class="mb-3">
+                        <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
+                        <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..."
+                            required>
+                        <small class="text-danger">{{ $errors->first('name') }}</small>
+                    </div>`;
+    $('#kra_dynamic').append(html)
+});
+$(document).on('click', '.kra_remove', function(){
+    let inputName = $(this).closest('.row').find('#kra_dynamic').find('.mb-3').length ;
+    if( inputName>0){
+        $(this).closest('.row').find('#kra_dynamic').find('.mb-3').last().remove();
+    }else{
+        let $message =  "Can't Delete First One!";
+        let $context = 'error';
+        let $positionClass= 'toast-top-right';
+        toastr.remove();
+        toastr[$context]($message, '', {
+            positionClass: $positionClass
+        });
+    }
 
+});
 </script>
 @endpush

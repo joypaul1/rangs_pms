@@ -16,8 +16,60 @@
 
         <div class="card border-top">
             @yield('table_header')
+            <div class="cards">
+                <div class="row" style="border: 1px solid #e9e4e4; padding: 2%;">
+                    <h5 class="text-center">
+                        Created KPI List <i class="menu-icon tf-icons bx bx-edit-alt"></i>
+                    </h5>
+                    <hr>
 
+                    <div class="col-sm-12 col-md-12 col-lg-6  mb-2">
+                        <label class="form-label" for="name"> KPI Text <strong class="text-danger">*</strong></label>
+                        <textarea name="name[]" id="" cols="30" rows="5" style="width: 100%;border-color: lightgray;"
+                            required></textarea>
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6  row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
+                            <label class="form-label" for="target"> Target <strong
+                                    class="text-danger">*</strong></label>
+
+                            <input type="text" name="target[]"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="target"
+                                class="form-control" placeholder="100" required autocomplete="off">
+                            <small class="text-danger">{{ $errors->first('target') }}</small>
+
+
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
+                            <label class="form-label" for="complite"> Complite <strong
+                                    class="text-danger">*</strong></label>
+
+                            <input type="text" name="complite[]"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="complite"
+                                class="form-control" placeholder="100%" required autocomplete="off">
+                            <small class="text-danger">{{ $errors->first('complite') }}</small>
+
+
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
+                            <label class="form-label" for="remark"> Any Remark ? </label>
+
+                            <input type="text" name="remark[]" id="remark" class="form-control" placeholder="....."
+                                autocomplete="off">
+                            <small class="text-danger">{{ $errors->first('remark') }}</small>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
             <div class="card-body row">
+
                 <div class="col-lg-6 col-md-12 col-sm-12">
 
                     <form method="POST" action="{{ route('pmsConfig.kra.store') }}">
