@@ -24,8 +24,7 @@
                     <small class="text-danger">{{ $errors->first('pms_year_id') }}</small>
                     <div class="mb-3">
                         <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
-                        <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..."
-                            required>
+                        <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..." required>
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                     </div>
                     <div id="kra_dynamic" style="width:100%"></div>
@@ -53,29 +52,30 @@
 @endsection
 @push('js')
 <script>
-    $(document).on('click', '.kra_add', function(){
-    let html =` <div class="mb-3">
+    $(document).on('click', '.kra_add', function() {
+        let html = ` <div class="mb-3">
                         <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
                         <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..."
                             required>
                         <small class="text-danger">{{ $errors->first('name') }}</small>
                     </div>`;
-    $('#kra_dynamic').append(html)
-});
-$(document).on('click', '.kra_remove', function(){
-    let inputName = $(this).closest('.row').find('#kra_dynamic').find('.mb-3').length ;
-    if( inputName>0){
-        $(this).closest('.row').find('#kra_dynamic').find('.mb-3').last().remove();
-    }else{
-        let $message =  "Can't Delete First One!";
-        let $context = 'error';
-        let $positionClass= 'toast-top-right';
-        toastr.remove();
-        toastr[$context]($message, '', {
-            positionClass: $positionClass
-        });
-    }
+        $('#kra_dynamic').append(html)
+    });
+    $(document).on('click', '.kra_remove', function() {
+        let inputName = $(this).closest('.row').find('#kra_dynamic').find('.mb-3').length;
+        if (inputName > 0) {
+            $(this).closest('.row').find('#kra_dynamic').find('.mb-3').last().remove();
+        } else {
+            let $message = "Can't Delete First One!";
+            let $context = 'error';
+            let $positionClass = 'toast-top-right';
+            toastr.remove();
+            toastr[$context]($message, '', {
+                positionClass: $positionClass
+            });
+        }
 
-});
+    });
+
 </script>
 @endpush
