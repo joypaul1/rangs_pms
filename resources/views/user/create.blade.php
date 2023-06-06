@@ -117,10 +117,10 @@
                             }}</label>
                         <hr>
 
-                        @forelse ($roles as $role)
+                        @forelse ($roles as $key=>$role)
                         <div class="form-check form-check-inline col-12">
                             <input class="form-check-input" type="checkbox" name="role_id[]" id="checkbox{{$role->id}}"
-                                value="{{$role->id}}">
+                                @if ($key==6) @checked(true) @endif value="{{$role->id}}">
                             <label class="form-check-label" for="checkbox{{$role->id}}">{{$role->name}}</label>
                         </div>
                         @error('role_id')

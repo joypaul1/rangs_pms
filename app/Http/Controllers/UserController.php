@@ -236,7 +236,18 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         if (auth()->user()->can('user-delete')) {
-            dd($id);
+            try {
+                DB::beginTransaction();
+                $user = User::whereId($id)->first();
+                $this->deleteRolePermission( $user);
+                $user->delete();
+                DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                // return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
+                return response()->json(['status' => false, 'mes' => 'Sorry! This Data Related with others Data Table!']);
+            }
+            return  response()->json(['status' => true, 'mes' => 'Data Deleted Successfully']);
         }
         abort(403, "You have no permission! 😒");
     }

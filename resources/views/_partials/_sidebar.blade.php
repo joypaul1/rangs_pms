@@ -162,7 +162,7 @@ $strpos = Route::currentRouteName();
         </li>
         {{-- End pms Panel --}}
         {{-- Role Permission Panel --}}
-        @if(auth()->user()->can('role-list'))
+        @if(!auth()->user()->hasRole('public'))
         <li class="menu-item  {{ strpos($strpos, 'role') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'permission') === 0 ? 'active open' : ' ' }}
          {{ strpos($strpos, 'role-permission') === 0 ? 'active open' : ' ' }}
@@ -199,12 +199,11 @@ $strpos = Route::currentRouteName();
 
             </ul>
         </li>
-        @endif
+
 
         {{-- End Role Permission Panel --}}
 
         {{-- tour Panel --}}
-        @if(auth()->user()->can('user-list'))
         <li class="menu-item  {{ strpos($strpos, 'user') === 0 ? 'active open' : ' ' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
