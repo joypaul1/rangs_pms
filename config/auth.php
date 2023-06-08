@@ -66,8 +66,9 @@ return [
         ],
 
         // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
+        //     'driver' => 'oracle',
+        //     'model' => App\Models\User::class,
+
         // ],
     ],
 

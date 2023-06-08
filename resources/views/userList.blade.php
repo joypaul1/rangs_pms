@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse (oci_fetch_array($res['ID']) as $key=> $data)
+                        @forelse (($res['ID']) as $key=> $data)
                         <tr>
                             @php
                                 $sl +=1;;

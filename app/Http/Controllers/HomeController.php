@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Traits\OracleDataCon;
 
 class HomeController extends Controller
 {
+    use OracleDataCon;
     /**
      * Create a new controller instance.
      *
@@ -35,30 +37,55 @@ class HomeController extends Controller
 
     public function userList()
     {
-        $users = User::all();
-        return view('userList', compact('users'));
+        // $users = User::all();
+        // return view('userList', compact('users'));
 
-        // $conn = oci_connect("DEVELOPERS2", "Test1234", "192.168.172.61:1521/xe");
-        // if (!$conn) {
-        //     $e = oci_error();
-        //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-        // }
+        $conn = oci_connect("DEVELOPERS2", "Test1234", "192.168.172.61:1521/xe");
+        if (!$conn) {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
 
-        // $stid = oci_parse($conn, 'SELECT * FROM RML_HR_APPS_USER');
-        // oci_execute($stid);
+        $stid = oci_parse($conn, 'SELECT * FROM RML_HR_APPS_USER');
+        oci_execute($stid);
 
-        // $nrows = oci_fetch_all($stid, $res);
+        $nrows = oci_fetch_all($stid, $res);
 
-        // // echo "$nrows rows fetched<br>\n";
-        // // dd($res);
-        // oci_free_statement($stid);
-        // oci_close($conn);
-        // return view('userList', compact('res', 'nrows'));
+        // echo "$nrows rows fetched<br>\n";
+        dd($res);
+        oci_free_statement($stid);
+        oci_close($conn);
+        return view('userList', compact('res', 'nrows'));
 
 
     }
 
+    public function userList2()
+    {
 
+        $conn = self::dataBaseConnect();
+        $sql = oci_parse($conn, 'SELECT * FROM RML_HR_APPS_USER');
+        oci_execute($sql);
+
+        // $nrows = oci_fetch_all($sql, $res);
+
+        // echo "$nrows rows fetched<br>\n";
+        // dd($res);
+        // oci_free_statement($sql);
+
+        // return view('userList', compact('res', 'nrows'));
+        while ($row = oci_fetch_assoc($sql)) {
+            $named_array[] = array(
+                "id" => $row['ID'],
+                "user_id" => $row['RML_ID'],
+                "name" => $row['EMP_NAME'],
+                "PMS_LINE_MANAGER_1_ID" => $row['PMS_LINE_MANAGER_1_ID'],
+                "PMS_LINE_MANAGER_2_ID" => $row['PMS_LINE_MANAGER_2_ID']
+            );
+        }
+        $json = array("items" => $named_array);
+        return response()->json($json);
+    }
 
     public function demoInsertData()
     {
@@ -132,7 +159,7 @@ class HomeController extends Controller
             $user->email = 'test_user@gmail.com';
             $user->password = Hash::make('1234567890');
             $user->save();
-            
+
             $user->permissions()->attach($user_perm);
 
             $admin = new User();

@@ -42,7 +42,7 @@ Route::get('/', function () {
 Route::get('login', [CustomAuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [CustomAuthController::class, 'login'])->name('login');
 Route::post('logout', [CustomAuthController::class, 'logout'])->name('logout');
-
+Route::get('user-list', [App\Http\Controllers\HomeController::class, 'userList'])->name('user.list');
 // authentication route list
 Route::group(['middleware' => 'auth'], function () {
 
