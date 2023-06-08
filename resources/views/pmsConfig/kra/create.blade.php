@@ -20,8 +20,8 @@
                 @yield('table_header')
 
                 <div class="card-body row">
-                    <input type="hidden" name="pms_year_id" value="{{$year->id}}">
-                    <small class="text-danger">{{ $errors->first('pms_year_id') }}</small>
+                    {{-- <input type="hidden" name="pms_year_id" value="{{$year->id}}">
+                    <small class="text-danger">{{ $errors->first('pms_year_id') }}</small> --}}
                     <div class="mb-3">
                         <label class="form-label" for="name"> kRA Name <strong class="text-danger">*</strong></label>
                         <input type="text" name="name[]" class="form-control" id="name" placeholder="Enter kra Name..." required>

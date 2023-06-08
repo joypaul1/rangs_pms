@@ -33,22 +33,24 @@
 
                     <tbody>
                         @forelse ($karData as $key=> $data)
+                        {{-- @dd($data) --}}
                         <tr>
                             <td>{{ $key+1}}</td>
                             <td>{{ $data['pms_name']}}</td>
-                            <td>{{ $data['emp_name']}} /{{ $data['user_id']}}</td>
+                            <td>{{  $data['user_id']}}</td>
+                            {{-- <td>{{ $data['emp_name'] . '/ '. $data['user_id']}}</td> --}}
                             <td>{{ $data['created_date']}}</td>
                             {{-- <td>{{ $data->activeYear->name}}</td> --}}
-                            {{-- <td>
-                                <a href="{{ route('pmsConfig.kra.edit', $data->id) }}"
-                                    class="btn btn-sm btn-secondary float-right">
+                            <td>
+                                <a href="{{ route('pmsConfig.kra.edit', $data['id']) }}"
+                                    class="btn btn-sm btn-info float-right">
                                     <i class="bx bx-fade-up-hover bx-edit-alt  me-1"></i>
                                 </a>
-                                <button data-href="{{ route('pmsConfig.kra.destroy',$data) }}" type="button"
+                                <button data-href="{{ route('pmsConfig.kra.destroy', $data['id']) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i>
 
-                            </td> --}}
+                            </td>
 
                         </tr>
                         @empty
@@ -59,6 +61,8 @@
                     </table>
                 </div>
             </div>
+            {{-- {{$karData-> }} --}}
+            {{ $karData->links() }}
         </div>
     </div>
 </div>

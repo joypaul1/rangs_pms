@@ -18,23 +18,16 @@
             @yield('table_header')
 
             <div class="card-body row">
-                <div class="col-lg-6 col-md-12 col-sm-12">
-                    <form method="post" action="{{ route('pmsConfig.kra.update',$kra->id) }}">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <form method="post" action="{{ route('pmsConfig.kra.update',$kra['ID']) }}">
                         @csrf
                         @method("PUT")
                         <div class="mb-3">
                             <label class="form-label" for="name"> Name <strong class="text-danger">*</strong></label>
                             <input type="text" name="name" class="form-control" id="name" placeholder="Enter kra Name..."
-                            value="{{ $kra->name }}"
+                            value="{{ $kra['PMS_NAME'] }}"
                             required>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="note"> Note </label>
-                            <input type="text" name="note" class="form-control" id="note" placeholder="Enter note..."
-                            value="{{ $kra->note }}"
-                            >
-                        </div>
-
 
                         <div class="b-block text-right">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -42,7 +35,7 @@
                     </form>
 
                 </div>
-                <div class="col-lg-6 col-md-12 col-sm-12">
+                {{-- <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="row col-12 align-items-center justify-content-center text-center "
                         style="width:100%; height:100%">
                         <strong class="border border-secondary  text-white" style="
@@ -57,7 +50,7 @@
                         </strong>
 
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
