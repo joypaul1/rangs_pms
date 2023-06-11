@@ -25,22 +25,34 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>EMployee </th>
+                            <th>Created By </th>
                             <th>Created Date</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse ($karData as $key=> $data)
-                        {{-- @dd($data) --}}
+
                         <tr>
                             <td>{{ $key+1}}</td>
-                            <td>{{ $data['pms_name']}}</td>
+                            <td>{{ $data['name']}}</td>
                             <td>{{  $data['user_id']}}</td>
                             {{-- <td>{{ $data['emp_name'] . '/ '. $data['user_id']}}</td> --}}
                             <td>{{ $data['created_date']}}</td>
-                            {{-- <td>{{ $data->activeYear->name}}</td> --}}
+                            <td class="text-center">
+                                @if ( $data['status'])
+                                <button type="button" class="btn btn-icon btn-primary">
+                                    <span class="tf-icons bx-tada  bx bx-check-circle"></span>
+                                </button>
+                                @else
+                                <button type="button" class="btn btn-icon btn-danger">
+                                    <span class="tf-icons bx-tada bx bx-x-circle"></span>
+                                </button>
+                                @endif
+
+                            </td>
                             <td>
                                 <a href="{{ route('pmsConfig.kra.edit', $data['id']) }}"
                                     class="btn btn-sm btn-info float-right">

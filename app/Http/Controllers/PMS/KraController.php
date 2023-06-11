@@ -52,7 +52,7 @@ class KraController extends Controller
         }
     }
 
-    public function paginate($items, $perPage = 1, $page = null, $options = [])
+    public function paginate($items, $perPage = 20, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
@@ -84,10 +84,9 @@ class KraController extends Controller
             try {
                 foreach ($request->name as $data) {
                     if ($oracleDatabase['status']) {
-                        $strSQL  = oci_parse($oracleDatabase['conn'], "INSERT INTO HR_PMS_LIST (PMS_NAME,CREATED_BY,CREATED_DATE,IS_ACTIVE,BG_COLOR,TABLE_REMARKS)VALUES ('$data' ,'RML-00955' , SYSDATE ,1 , 'card bg-success text-white mb-4' , '' )");
-                        if (oci_execute($strSQL)) {
-                            return redirect()->route('pmsConfig.kra.index')->with('success', 'KRA has been created successfully.');
-                        } else {
+                        $strSQL  = oci_parse($oracleDatabase['conn'], "INSERT INTO HR_PMS_KRA_LIST (KRA_NAME,CREATED_BY,CREATED_DATE,IS_ACTIVE)VALUES ('$data' ,'RML-00955' , SYSDATE ,1  )");
+
+                        if (oci_execute($strSQL) != TRUE) {
                             $lastError = error_get_last();
                             $error = $lastError ? "" . $lastError["message"] . "" : "";
                             return redirect()->back()->with('error',  $error);
@@ -98,7 +97,7 @@ class KraController extends Controller
 
                 return redirect()->back()->with('error',  $ex->getMessage());
             }
-            return redirect()->route('pmsConfig.kra.index')->with('success', 'PMS Year has been created successfully.');
+            return redirect()->route('pmsConfig.kra.index')->with('success', 'PMS KRA has been created successfully.');
         }
         abort(403, "You have no permission! 😒");
     }
@@ -119,9 +118,10 @@ class KraController extends Controller
         // DD( $id);
         if (auth()->user()->can('pms-kra-edit')) {
             $oracleDatabase = self::dataBaseConnect();
-            $sql = oci_parse($oracleDatabase['conn'], 'SELECT * FROM HR_PMS_LIST WHERE ID = ' . $id);
+            $sql = oci_parse($oracleDatabase['conn'], 'SELECT * FROM HR_PMS_KRA_LIST WHERE ID = ' . $id);
             oci_execute($sql);
             $kra = oci_fetch_assoc($sql);
+            // dd( $kra);
             return view('pmsConfig.kra.edit', compact('kra'));
         }
         abort(403, "You have no permission! 😒");
@@ -158,18 +158,18 @@ class KraController extends Controller
         // oci_free_statement($statement);
         // oci_close($oracleDatabase['conn']);
         if (auth()->user()->can('pms-kra-edit')) {
-
+            // dd($request->all());
             try {
                 if ($request->name) {
                     if ($oracleDatabase['status']) {
-                        $query = "UPDATE HR_PMS_LIST SET PMS_NAME = :new_pms WHERE ID = :user_id";
+                        $query = "UPDATE HR_PMS_KRA_LIST SET KRA_NAME = :new_name WHERE ID = :id";
                         $statement = oci_parse($oracleDatabase['conn'], $query);
 
                         // Bind the parameters
-                        $new_pms = $request->name;
-                        $user_id = $id;
-                        oci_bind_by_name($statement, ":new_pms", $new_pms);
-                        oci_bind_by_name($statement, ":user_id", $user_id);
+                        $name = $request->name;
+                        $id = $id;
+                        oci_bind_by_name($statement, ":new_name", $name );
+                        oci_bind_by_name($statement, ":id", $id);
 
                         // $result = oci_execute($strSQL, OCI_COMMIT_ON_SUCCESS);
                         $result = oci_execute($statement);
@@ -188,7 +188,7 @@ class KraController extends Controller
 
                 return redirect()->back()->with('error', $ex->getMessage());
             }
-            return redirect()->back()->with('success', 'PMS Year has been Updated successfully.');
+            return redirect()->back()->with('success', 'KRA has been Updated successfully.');
         }
         abort(403, "You have no permission! 😒");
     }
@@ -201,7 +201,7 @@ class KraController extends Controller
         if (auth()->user()->can('pms-kra-delete')) {
             try {
                 $oracleDatabase = self::dataBaseConnect();
-                $sql = oci_parse($oracleDatabase['conn'], 'DELETE  FROM HR_PMS_LIST WHERE ID = ' . $id);
+                $sql = oci_parse($oracleDatabase['conn'], 'DELETE  FROM HR_PMS_KRA_LIST WHERE ID = ' . $id);
                 oci_execute($sql);
                 $result = oci_execute($sql, OCI_DEFAULT);
                 if ($result) {
@@ -214,7 +214,7 @@ class KraController extends Controller
             } catch (\Exception $ex) {
                 return response()->json(['status' => false, 'mes' => $ex->getMessage()]);
             }
-            return  response()->json(['status' => true, 'mes' => 'PMS Year Data Deleted Successfully']);
+            return  response()->json(['status' => true, 'mes' => 'KRA Data Deleted Successfully']);
         }
         return response()->json(['status' => false, 'mes' => 'Sorry ! You have no permission! 😒']);
 

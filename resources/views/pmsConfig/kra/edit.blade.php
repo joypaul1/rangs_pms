@@ -25,7 +25,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="name"> Name <strong class="text-danger">*</strong></label>
                             <input type="text" name="name" class="form-control" id="name" placeholder="Enter kra Name..."
-                            value="{{ $kra['PMS_NAME'] }}"
+                            value="{{ $kra['KRA_NAME'] }}"
                             required>
                         </div>
 
