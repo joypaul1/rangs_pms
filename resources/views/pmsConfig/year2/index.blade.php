@@ -25,24 +25,18 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Created By </th>
-                            <th>Created Date</th>
-                            <th>Status</th>
+                            <th>Staus</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse ($yearData as $key=> $data)
-
+                        @forelse ($years as $key=> $data)
                         <tr>
                             <td>{{ $key+1}}</td>
-                            <td>{{ $data['pms_name']}}</td>
-                            <td>{{  $data['user_id']}}</td>
-                            {{-- <td>{{ $data['emp_name'] . '/ '. $data['user_id']}}</td> --}}
-                            <td>{{ $data['created_date']}}</td>
+                            <td>{{ $data->name}}</td>
                             <td class="text-center">
-                                @if ( $data['status'])
+                                @if ( $data->status)
                                 <button type="button" class="btn btn-icon btn-primary">
                                     <span class="tf-icons bx-tada  bx bx-check-circle"></span>
                                 </button>
@@ -52,13 +46,14 @@
                                 </button>
                                 @endif
 
+
                             </td>
                             <td>
-                                <a href="{{ route('pmsConfig.year.edit', $data['id']) }}"
-                                    class="btn btn-sm btn-info float-right">
+                                <a href="{{ route('pmsConfig.year.edit', $data->id) }}"
+                                    class="btn btn-sm btn-secondary float-right">
                                     <i class="bx bx-fade-up-hover bx-edit-alt  me-1"></i>
                                 </a>
-                                <button data-href="{{ route('pmsConfig.year.destroy', $data['id']) }}" type="button"
+                                <button data-href="{{ route('pmsConfig.year.destroy',$data) }}" type="button"
                                     class="btn btn-sm btn-danger float-right delete_check">
                                     <i class="bx bx-fade-up-hover bx-trash-alt me-1"></i>
 
@@ -73,8 +68,6 @@
                     </table>
                 </div>
             </div>
-           <div class="d-flex justify-content-center">{{ $yearData->links() }}</div>
-
         </div>
     </div>
 </div>

@@ -26,17 +26,18 @@ class KraController extends Controller
             $oracleDatabase = self::dataBaseConnect();
             $karData = [];
             if ($oracleDatabase['status']) {
-                $sql = oci_parse($oracleDatabase['conn'], 'SELECT ID as UNIQUEID, PMS_NAME,CREATED_BY,CREATED_DATE,BG_COLOR,CLOSED_DATE,CLOSED_BY,TABLE_REMARKS FROM HR_PMS_LIST');
+                $sql = oci_parse($oracleDatabase['conn'], 'SELECT ID as UNIQUEID, KRA_NAME,CREATED_BY,CREATED_DATE,
+                IS_ACTIVE FROM HR_PMS_KRA_LIST');
                 oci_execute($sql);
                 $nrows = oci_fetch_all($sql, $resData);
-                // DD($resData);
+
                 for ($i = 0; $i < (int)$nrows; $i++) {
                     $karData[$i] = [
                         'id' => $resData['UNIQUEID'][$i],
-                        'pms_name' => $resData['PMS_NAME'][$i],
+                        'name' => $resData['KRA_NAME'][$i],
                         'user_id' => $resData['CREATED_BY'][$i],
                         'created_date' => $resData['CREATED_DATE'][$i],
-                        // 'emp_name' => $resData['EMP_NAME'][$i]
+                        'status' => $resData['IS_ACTIVE'][$i],
                     ];
                 }
 

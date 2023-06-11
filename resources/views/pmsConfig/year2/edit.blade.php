@@ -20,19 +20,19 @@
             <div class="card-body">
                 <div class="col-6">
 
-                    <form method="post" action="{{ route('pmsConfig.year.update',$year['ID']) }}">
+                    <form method="post" action="{{ route('pmsConfig.year.update',$year->id) }}">
                         @csrf
                         @method("PUT")
                         <div class="mb-3">
                             <label class="form-label" for="name"> Name</label>
                             <input type="text" name="name" class="form-control" id="name" placeholder="2023 - 2024"
-                            value="{{ $year['PMS_NAME'] }}"
+                            value="{{ $year->name }}"
                             required>
                         </div>
                         <div class="mb-3">
                                 <div class="form-check mt-3">
                                     <input name="status" class="form-check-input" type="radio" value="1"
-                                        @if ($year['IS_ACTIVE'])
+                                        @if ($year->status)
                                         checked
                                         @endif
                                      id="active">
@@ -41,7 +41,7 @@
                                   </div>
                                 <div class="form-check mt-3">
                                     <input name="status" class="form-check-input" type="radio" value="0"
-                                    @if (!$year['IS_ACTIVE'])
+                                    @if (!$year->status)
                                     checked
                                     @endif
                                     id="Inactive">
